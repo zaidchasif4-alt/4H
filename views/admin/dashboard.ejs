@@ -1,0 +1,148 @@
+<div class="space-y-8">
+
+    <!-- Page header -->
+    <div>
+        <h1 class="text-2xl font-serif-luxury font-medium text-gray-900">Dashboard</h1>
+        <p class="text-sm text-gray-500 mt-1">Welcome back, Administrator. Here's your store overview.</p>
+    </div>
+
+    <!-- Stats cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <!-- Total Products -->
+        <div class="bg-white border border-gray-100 rounded-lg p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-semibold uppercase tracking-widest text-gray-400">Total Products</span>
+                <div class="w-9 h-9 rounded-full bg-black flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white" style="font-size:16px;">inventory_2</span>
+                </div>
+            </div>
+            <p class="text-4xl font-light font-serif-luxury text-gray-900"><%= productCount || 0 %></p>
+            <p class="text-xs text-gray-400 mt-2">In your catalog</p>
+        </div>
+
+        <!-- Total Categories -->
+        <div class="bg-white border border-gray-100 rounded-lg p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-semibold uppercase tracking-widest text-gray-400">Categories</span>
+                <div class="w-9 h-9 rounded-full bg-zinc-800 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white" style="font-size:16px;">category</span>
+                </div>
+            </div>
+            <p class="text-4xl font-light font-serif-luxury text-gray-900"><%= categoryCount || 0 %></p>
+            <p class="text-xs text-gray-400 mt-2">Active collections</p>
+        </div>
+
+        <!-- Hero Images Status -->
+        <div class="bg-white border border-gray-100 rounded-lg p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-semibold uppercase tracking-widest text-gray-400">Hero Images</span>
+                <div class="w-9 h-9 rounded-full flex items-center justify-center" style="background:#b8975a;">
+                    <span class="material-symbols-outlined text-white" style="font-size:16px;">image</span>
+                </div>
+            </div>
+            <p class="text-4xl font-light font-serif-luxury text-gray-900">
+                <%= (settings && (settings.heroImage1 || settings.heroImage2 || settings.heroImage3)) ? '✓' : '—' %>
+            </p>
+            <p class="text-xs text-gray-400 mt-2">
+                <a href="/admin/settings" class="hover:text-black transition-colors underline underline-offset-2">
+                    <%= (settings && settings.heroImage1) ? 'Images configured' : 'Click to configure' %>
+                </a>
+            </p>
+        </div>
+
+        <!-- WhatsApp Status -->
+        <div class="bg-white border border-gray-100 rounded-lg p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-semibold uppercase tracking-widest text-gray-400">WhatsApp</span>
+                <div class="w-9 h-9 rounded-full bg-green-600 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white" style="font-size:16px;">chat</span>
+                </div>
+            </div>
+            <p class="text-sm font-medium text-gray-900 truncate mt-1">
+                <%= (settings && settings.whatsappNumber) ? settings.whatsappNumber : 'Not set' %>
+            </p>
+            <p class="text-xs text-gray-400 mt-2">
+                <a href="/admin/settings" class="hover:text-black transition-colors underline underline-offset-2">
+                    <%= (settings && settings.whatsappNumber) ? 'Update number' : 'Set WhatsApp number' %>
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Quick links -->
+        <div class="bg-white border border-gray-100 rounded-lg p-6 shadow-sm">
+            <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-5">Quick Actions</h3>
+            <div class="space-y-3">
+                <a href="/admin/add-product" class="flex items-center gap-4 p-4 rounded-lg border border-gray-100 hover:border-black hover:bg-gray-50 transition-all group">
+                    <div class="w-9 h-9 rounded-full bg-black flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-white" style="font-size:16px;">add</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">Add New Product</p>
+                        <p class="text-xs text-gray-400">Add a watch to your catalog</p>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-300 group-hover:text-black ml-auto transition-colors" style="font-size:18px;">chevron_right</span>
+                </a>
+
+                <a href="/admin/categories" class="flex items-center gap-4 p-4 rounded-lg border border-gray-100 hover:border-black hover:bg-gray-50 transition-all group">
+                    <div class="w-9 h-9 rounded-full bg-zinc-800 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-white" style="font-size:16px;">category</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">Manage Categories</p>
+                        <p class="text-xs text-gray-400">Add or delete collections</p>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-300 group-hover:text-black ml-auto transition-colors" style="font-size:18px;">chevron_right</span>
+                </a>
+
+                <a href="/admin/settings" class="flex items-center gap-4 p-4 rounded-lg border border-gray-100 hover:border-black hover:bg-gray-50 transition-all group">
+                    <div class="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style="background:#b8975a;">
+                        <span class="material-symbols-outlined text-white" style="font-size:16px;">tune</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">Site Settings</p>
+                        <p class="text-xs text-gray-400">Hero images, marquee, WhatsApp</p>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-300 group-hover:text-black ml-auto transition-colors" style="font-size:18px;">chevron_right</span>
+                </a>
+
+                <a href="/" target="_blank" class="flex items-center gap-4 p-4 rounded-lg border border-gray-100 hover:border-black hover:bg-gray-50 transition-all group">
+                    <div class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-gray-600" style="font-size:16px;">open_in_new</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">View Live Store</p>
+                        <p class="text-xs text-gray-400">See website as customer</p>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-300 group-hover:text-black ml-auto transition-colors" style="font-size:18px;">chevron_right</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Store info panel -->
+        <div class="bg-black rounded-lg p-6 text-white shadow-sm flex flex-col justify-between">
+            <div>
+                <p class="text-xs uppercase tracking-[0.4em] mb-2" style="color:#b8975a;">4H Timepieces</p>
+                <h3 class="text-3xl font-light" style="font-family:'Playfair Display',serif;">Admin Panel</h3>
+                <p class="text-sm mt-4 text-zinc-400 leading-relaxed">
+                    Manage your luxury watch store. Add products, configure hero images, set WhatsApp contact, and control your collections — all from here.
+                </p>
+            </div>
+            <div class="mt-8 pt-6 border-t border-zinc-800 grid grid-cols-2 gap-4">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-zinc-500">Products</p>
+                    <p class="text-2xl font-light mt-1" style="font-family:'Playfair Display',serif;"><%= productCount || 0 %></p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-zinc-500">Categories</p>
+                    <p class="text-2xl font-light mt-1" style="font-family:'Playfair Display',serif;"><%= categoryCount || 0 %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

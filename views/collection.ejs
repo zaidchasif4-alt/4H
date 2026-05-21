@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Collection — 4H Luxury</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Tenor+Sans&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        :root{--ink:#0a0a0a;--bone:#f5f2ee;--warm-white:#faf9f7;--gold:#b8975a;--gold-light:#d4b483;--mid:#6b6560;--border:rgba(10,10,10,0.10);}
+        *{box-sizing:border-box;}
+        html{cursor:none;scroll-behavior:smooth;}
+        body{font-family:'DM Sans',sans-serif;background:var(--warm-white);color:var(--ink);}
+        a,button{cursor:none;}
+        .font-display{font-family:'Cormorant Garamond',serif;}
+        .font-label{font-family:'Tenor Sans',sans-serif;}
+
+        #cursor{width:6px;height:6px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s;opacity:0;}
+
+        body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.4;}
+
+        .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+        .reveal.visible{opacity:1;transform:none;}
+        .d1{transition-delay:.05s}.d2{transition-delay:.12s}.d3{transition-delay:.19s}.d4{transition-delay:.26s}
+
+        .product-card .card-img{transition:transform .9s cubic-bezier(.25,.46,.45,.94);}
+        .product-card:hover .card-img{transform:scale(1.07);}
+        .product-card .card-overlay{opacity:0;transition:opacity .4s ease;}
+        .product-card:hover .card-overlay{opacity:1;}
+
+        .filter-pill{font-family:'Tenor Sans',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;padding:8px 20px;border:1px solid var(--border);background:transparent;color:var(--mid);cursor:none;transition:all .3s ease;white-space:nowrap;}
+        .filter-pill:hover,.filter-pill.active{background:var(--ink);color:white;border-color:var(--ink);}
+
+        .dropdown-menu{opacity:0;visibility:hidden;transform:translateY(8px);transition:all .25s cubic-bezier(.16,1,.3,1);}
+        .dropdown-menu.open{opacity:1;visibility:visible;transform:translateY(0);}
+
+        .no-scroll::-webkit-scrollbar{display:none;}
+        .no-scroll{-ms-overflow-style:none;scrollbar-width:none;}
+
+        .gold-line{display:inline-block;width:36px;height:1px;background:var(--gold);vertical-align:middle;margin-right:10px;}
+
+        .material-symbols-outlined{font-size:18px;line-height:1;display:inline-block;vertical-align:middle;}
+
+        ::-webkit-scrollbar{width:4px;}
+        ::-webkit-scrollbar-track{background:var(--warm-white);}
+        ::-webkit-scrollbar-thumb{background:var(--ink);border-radius:2px;}
+
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .page-enter{animation:fadeIn .8s cubic-bezier(.16,1,.3,1) both;}
+        .page-enter-2{animation:fadeIn .8s cubic-bezier(.16,1,.3,1) .15s both;}
+        .page-enter-3{animation:fadeIn .8s cubic-bezier(.16,1,.3,1) .3s both;}
+
+        .count-badge{font-family:'Cormorant Garamond',serif;font-size:11px;color:var(--mid);}
+    </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<%- include('partials/header') %>
+
+<main class="min-h-screen pt-24 md:pt-32 pb-32">
+
+    <!-- PAGE HEADER -->
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 mb-12 md:mb-16">
+        <div class="page-enter flex items-center gap-3 mb-4">
+            <span class="gold-line"></span>
+            <span class="font-label text-[9px] uppercase tracking-[0.4em] text-[var(--gold)]">4H Store</span>
+        </div>
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <h1 class="page-enter-2 font-display font-light leading-none" style="font-size:clamp(3rem,7vw,7rem);">
+                Our <span class="italic text-[var(--gold)]">Collection</span>
+            </h1>
+            <span class="page-enter-3 count-badge"><%= products ? products.length : 0 %> Pieces</span>
+        </div>
+    </div>
+
+    <!-- DESKTOP FILTER BAR -->
+    <div class="hidden md:block border-y border-[var(--border)] mb-12 page-enter-2">
+        <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 py-4 flex items-center justify-between gap-8">
+            <div class="flex items-center gap-2 overflow-x-auto no-scroll flex-1">
+                <button onclick="applyFilter('cat','all')" class="filter-pill <%= currentFilter.cat === 'all' ? 'active' : '' %>">All</button>
+                <% categories.forEach(category => { %>
+                    <button onclick="applyFilter('cat','<%= category.slug %>')" class="filter-pill <%= currentFilter.cat === category.slug ? 'active' : '' %>">
+                        <%= category.name %>
+                    </button>
+                <% }); %>
+            </div>
+            <div class="flex items-center gap-6 shrink-0">
+                <div class="relative dropdown-parent">
+                    <button onclick="toggleMenu('sort-dd')" class="flex items-center gap-2 font-label text-[9px] uppercase tracking-[0.25em] text-[var(--mid)] hover:text-[var(--ink)] transition-colors focus:outline-none">
+                        <span>Sort</span>
+                        <svg class="w-3 h-3 transition-transform duration-200" id="sort-dd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div id="sort-dd" class="dropdown-menu absolute top-full right-0 mt-4 w-48 bg-[var(--warm-white)] border border-[var(--border)] shadow-xl py-2 z-50">
+                        <% [['newest','Newest Arrivals'],['price-low','Price: Low to High'],['price-high','Price: High to Low'],['oldest','Oldest First']].forEach(([v,l]) => { %>
+                            <button onclick="applyFilter('sort','<%= v %>')" class="block w-full text-left px-5 py-2.5 font-label text-[9px] uppercase tracking-[0.15em] <%= currentFilter.sort === v ? 'text-[var(--ink)] bg-[var(--bone)]' : 'text-[var(--mid)] hover:bg-[var(--bone)]' %> transition-colors">
+                                <%= l %>
+                            </button>
+                        <% }); %>
+                    </div>
+                </div>
+                <div class="w-px h-4 bg-[var(--border)]"></div>
+                <div class="relative dropdown-parent">
+                    <button onclick="toggleMenu('price-dd')" class="flex items-center gap-2 font-label text-[9px] uppercase tracking-[0.25em] text-[var(--mid)] hover:text-[var(--ink)] transition-colors focus:outline-none">
+                        <span>Price</span>
+                        <svg class="w-3 h-3 transition-transform duration-200" id="price-dd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div id="price-dd" class="dropdown-menu absolute top-full right-0 mt-4 w-60 bg-[var(--warm-white)] border border-[var(--border)] shadow-xl p-5 z-50">
+                        <p class="font-label text-[8px] uppercase tracking-[0.3em] text-[var(--mid)] mb-3">Price Range (PKR)</p>
+                        <div class="flex items-center gap-2 mb-4">
+                            <input type="number" id="minPriceInput" placeholder="Min" value="<%= currentFilter.minPrice %>" class="w-1/2 bg-white border border-[var(--border)] px-3 py-2 text-xs focus:outline-none focus:border-[var(--ink)] transition-colors" />
+                            <span class="text-[var(--mid)] text-xs">—</span>
+                            <input type="number" id="maxPriceInput" placeholder="Max" value="<%= currentFilter.maxPrice %>" class="w-1/2 bg-white border border-[var(--border)] px-3 py-2 text-xs focus:outline-none focus:border-[var(--ink)] transition-colors" />
+                        </div>
+                        <button onclick="applyPriceFilter()" class="w-full bg-[var(--ink)] text-white font-label text-[9px] uppercase tracking-[0.25em] py-2.5 hover:bg-[var(--mid)] transition-colors">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE FILTER PILLS -->
+    <div class="md:hidden flex gap-2 overflow-x-auto no-scroll px-6 pb-4 mb-8 page-enter-2">
+        <button onclick="applyFilter('cat','all')" class="filter-pill <%= currentFilter.cat === 'all' ? 'active' : '' %>">All</button>
+        <% categories.forEach(cat => { %>
+            <button onclick="applyFilter('cat','<%= cat.slug %>')" class="filter-pill <%= currentFilter.cat === cat.slug ? 'active' : '' %>">
+                <%= cat.name %>
+            </button>
+        <% }); %>
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-12 lg:px-20">
+        <% if(products && products.length > 0) { %>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-12 sm:gap-y-16">
+                <% products.forEach((product, idx) => { %>
+                    <div class="product-card group reveal d<%= (idx % 4) + 1 %> flex flex-col">
+                        <a href="/product/<%= product._id %>" class="block relative w-full aspect-[3/4] bg-[var(--bone)] overflow-hidden mb-4">
+                            <% if(product.isOnSale && product.salePrice && product.salePrice < product.basePrice) { %>
+                                <span class="absolute top-3 left-3 z-20 font-label text-[8px] uppercase tracking-[0.2em] bg-[var(--ink)] text-white px-3 py-1.5">Sale</span>
+                            <% } %>
+                            <img alt="<%= product.title %>" class="card-img w-full h-full object-cover object-center" src="<%= product.cardImageUrl %>"
+                                onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=600';" />
+                            <div class="card-overlay absolute inset-0 bg-[var(--ink)]/40 flex items-end justify-center pb-6">
+                                <span class="font-label text-[9px] text-white uppercase tracking-[0.3em] border-b border-white/60 pb-1">View Watch</span>
+                            </div>
+                        </a>
+                        <div class="flex flex-col gap-1 px-0.5">
+                            <span class="font-label text-[8px] uppercase tracking-[0.25em] text-[var(--gold)]">
+                                <%= product.category ? product.category.name : '4H' %>
+                            </span>
+                            <a href="/product/<%= product._id %>">
+                                <h3 class="font-display font-light text-base sm:text-lg leading-snug hover:text-[var(--mid)] transition-colors truncate"><%= product.title %></h3>
+                            </a>
+                            <div class="font-label text-[11px] tracking-wider mt-1">
+                                <% if(product.isOnSale && product.salePrice && product.salePrice < product.basePrice) { %>
+                                    <span class="text-[var(--ink)]">PKR <%= product.salePrice.toLocaleString() %></span>
+                                    <del class="text-[var(--mid)] ml-2 text-[9px]">PKR <%= product.basePrice.toLocaleString() %></del>
+                                <% } else { %>
+                                    <span>PKR <%= product.basePrice.toLocaleString() %></span>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="py-32 text-center reveal">
+                <div class="font-display italic text-[var(--gold)] mb-4" style="font-size:4rem;opacity:.2;">✦</div>
+                <p class="font-label text-[9px] uppercase tracking-[0.4em] text-[var(--mid)] mb-6">No watches found</p>
+                <button onclick="applyFilter('cat','all')" class="filter-pill active">Clear Filters</button>
+            </div>
+        <% } %>
+    </div>
+</main>
+
+<%- include('partials/footer') %>
+
+<script>
+    // ── Cursor ────────────────────────────────────────────────────────────────
+    const cur = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+        cur.style.left    = e.clientX + 'px';
+        cur.style.top     = e.clientY + 'px';
+        cur.style.opacity = '1';
+    });
+    document.addEventListener('mouseleave', () => { cur.style.opacity = '0'; });
+    document.addEventListener('mouseover', e => {
+        if (e.target.closest('a, button')) {
+            cur.style.width = '10px'; cur.style.height = '10px'; cur.style.background = '#0a0a0a';
+        } else {
+            cur.style.width = '6px'; cur.style.height = '6px'; cur.style.background = '#b8975a';
+        }
+    });
+
+    // ── Scroll reveal ─────────────────────────────────────────────────────────
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ── Filters ───────────────────────────────────────────────────────────────
+    const params = new URLSearchParams(window.location.search);
+
+    function applyFilter(key, value) {
+        if (value === 'all' || value === 'newest') params.delete(key);
+        else params.set(key, value);
+        window.location.search = params.toString();
+    }
+
+    function applyPriceFilter() {
+        const min = document.getElementById('minPriceInput').value;
+        const max = document.getElementById('maxPriceInput').value;
+        if (min) params.set('minPrice', min); else params.delete('minPrice');
+        if (max) params.set('maxPrice', max); else params.delete('maxPrice');
+        window.location.search = params.toString();
+    }
+
+    // ── Dropdowns ─────────────────────────────────────────────────────────────
+    function toggleMenu(id) {
+        const el   = document.getElementById(id);
+        const icon = document.getElementById(id + '-icon');
+        document.querySelectorAll('.dropdown-menu').forEach(m => { if (m.id !== id) m.classList.remove('open'); });
+        document.querySelectorAll('.dropdown-parent svg').forEach(s => { if (s.id !== id + '-icon') s.classList.remove('rotate-180'); });
+        el.classList.toggle('open');
+        if (icon) icon.classList.toggle('rotate-180');
+    }
+    document.addEventListener('click', e => {
+        if (!e.target.closest('.dropdown-parent')) {
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('open'));
+            document.querySelectorAll('.dropdown-parent svg').forEach(s => s.classList.remove('rotate-180'));
+        }
+    });
+</script>
+</body>
+</html>

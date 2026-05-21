@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Cart - 4H Premium Store</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed-variant": "#464747",
+                        "surface-container": "#eeeeee",
+                        "inverse-surface": "#2f3131",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-secondary-container": "#5f6161",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#444748",
+                        "surface-container-high": "#e8e8e8",
+                        "on-background": "#1a1c1c",
+                        "inverse-on-surface": "#f0f1f1",
+                        "tertiary-fixed-dim": "#c7c6c6",
+                        "primary": "#000000",
+                        "primary-fixed": "#e5e2e1",
+                        "surface-dim": "#dadada",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#5f5e5e",
+                        "on-secondary-fixed-variant": "#454747",
+                        "primary-fixed-dim": "#c9c6c5",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#1a1c1c",
+                        "tertiary-fixed": "#e3e2e2",
+                        "on-primary-fixed": "#1c1b1b",
+                        "background": "#f9f9f9",
+                        "tertiary": "#000000",
+                        "surface": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "secondary": "#5d5f5f",
+                        "on-surface": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "primary-container": "#1c1b1b",
+                        "surface-bright": "#f9f9f9",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "outline-variant": "#c4c7c7",
+                        "surface-container-highest": "#e2e2e2",
+                        "outline": "#747878",
+                        "on-tertiary-container": "#838484",
+                        "inverse-primary": "#c9c6c5",
+                        "secondary-container": "#dcdddd",
+                        "surface-container-low": "#f3f3f4",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-primary-container": "#858383"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "8px",
+                        "margin-tablet": "40px",
+                        "gutter": "32px",
+                        "section-gap": "160px",
+                        "margin-mobile": "20px",
+                        "container-max-width": "1440px",
+                        "margin-desktop": "80px"
+                    },
+                    fontFamily: {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Playfair Display"],
+                        "headline-display": ["Playfair Display"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    fontSize: {
+                        "body-lg": ["18px", { "lineHeight": "32px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "headline-display": ["80px", { "lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface-container-lowest text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-primary selection:text-on-primary">
+
+<%- include('partials/header') %>
+
+<main class="flex-1 w-full max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop pt-32 pb-48 md:pb-16">
+    
+    <% 
+       let totalItems = 0; 
+       let subtotal = 0;
+       if (typeof cartItems !== 'undefined' && cartItems.length > 0) { 
+           cartItems.forEach(item => {
+               totalItems += (item.quantity || 1);
+               subtotal += (item.price * (item.quantity || 1));
+           });
+       } 
+    %>
+
+    <div class="mb-12 md:border-none border-b border-outline-variant pb-6 md:pb-0 transition-all duration-500">
+        <h1 class="font-headline-display text-headline-lg-mobile md:text-headline-display tracking-tight transition-transform duration-500 hover:translate-x-1">Shopping Bag</h1>
+        <p class="font-body-md text-body-md text-secondary mt-2" id="cart-item-count"><%= totalItems %> Items</p>
+    </div>
+
+    <div id="empty-cart-message" class="<%= (typeof cartItems === 'undefined' || cartItems.length === 0) ? 'flex' : 'hidden' %> flex-col items-center justify-center py-24 text-center transform transition-all duration-700 ease-out">
+        <div class="w-16 h-16 border border-outline-variant rounded-full flex items-center justify-center mb-6 text-secondary/60 animate-bounce">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"></path>
+            </svg>
+        </div>
+        <p class="text-on-surface font-headline-md text-2xl mb-4 tracking-tight">Your bag is currently empty.</p>
+        <p class="text-secondary max-w-sm text-sm mb-8 leading-relaxed">Explore our premium layout variants catalog to source exclusive architectural design assets.</p>
+        <a href="/" class="inline-block bg-primary text-on-primary px-8 py-4 font-label-caps text-label-caps tracking-[0.2em] hover:bg-neutral-800 transition-all duration-300 shadow-sm active:scale-95">CONTINUE SHOPPING</a>
+    </div>
+
+    <div id="cart-content" class="<%= (typeof cartItems !== 'undefined' && cartItems.length > 0) ? 'flex' : 'hidden' %> flex-col lg:flex-row gap-gutter lg:gap-16 opacity-100 transition-opacity duration-500">
+        
+        <section class="lg:w-[65%] flex flex-col gap-10 md:gap-12" id="cart-items-container">
+            <% if (typeof cartItems !== 'undefined' && cartItems.length > 0) { %>
+                <% cartItems.forEach(item => { %>
+                    <article class="flex gap-6 sm:gap-8 items-start pb-10 md:pb-0 border-b border-outline-variant md:border-none group transition-all duration-500 transform origin-center cart-item-row" data-product-id="<%= item.id %>" data-price="<%= item.price %>" data-name="<%= item.name %>" data-image="<%= item.image %>">
+                        <div class="w-32 h-40 md:w-48 md:h-60 bg-surface shrink-0 overflow-hidden border border-outline-variant/30 rounded-sm shadow-sm relative">
+                            <img alt="<%= item.name %>" class="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" src="<%= item.image %>"/>
+                        </div>
+                        <div class="flex-1 flex flex-col justify-between py-1 md:py-2 h-40 md:h-60">
+                            <div>
+                                <div class="flex justify-between items-start mb-2">
+                                    <h2 class="font-headline-md text-body-lg md:text-[24px] font-medium leading-tight tracking-tight text-neutral-900 group-hover:text-neutral-700 transition-colors"><%= item.name %></h2>
+                                    <span class="font-mono text-body-md font-semibold whitespace-nowrap ml-4 product-line-total">Rs <%= (item.price * (item.quantity || 1)).toLocaleString() %></span>
+                                </div>
+                                <p class="font-mono text-xs text-secondary mt-1">Unit Price: Rs <%= item.price.toLocaleString() %></p>
+                            </div>
+                            <div class="flex justify-between items-end mt-auto">
+                                <div class="flex items-center border border-outline-variant/60 bg-white shadow-xs">
+                                    <button onclick="updateQuantity('<%= item.id %>', 'decrease')" class="text-secondary hover:text-primary transition-colors flex items-center justify-center w-9 h-9 text-sm font-semibold active:scale-75 focus:outline-none">
+                                        &minus;
+                                    </button>
+                                    <span class="font-mono text-sm w-6 text-center font-bold text-neutral-800 product-qty-display select-none"><%= item.quantity || 1 %></span>
+                                    <button onclick="updateQuantity('<%= item.id %>', 'increase')" class="text-secondary hover:text-primary transition-colors flex items-center justify-center w-9 h-9 text-sm font-semibold active:scale-75 focus:outline-none">
+                                        &plus;
+                                    </button>
+                                </div>
+                                <button onclick="removeItem('<%= item.id %>')" class="font-label-caps text-[11px] font-semibold text-secondary hover:text-red-700 tracking-widest transition-all duration-300 border-b border-transparent hover:border-red-700 pb-0.5 focus:outline-none">REMOVE</button>
+                            </div>
+                        </div>
+                    </article>
+                    <hr class="hidden md:block border-t border-outline-variant/30 item-divider" data-divider-id="<%= item.id %>"/>
+                <% }); %>
+            <% } %>
+        </section>
+
+        <aside class="hidden lg:block lg:w-[35%] relative">
+            <div class="sticky top-32 bg-neutral-50/60 border border-neutral-100 p-10 rounded-sm shadow-xs">
+                <h3 class="font-label-caps text-label-caps font-semibold text-neutral-900 mb-8 pb-3 border-b border-neutral-200/60 tracking-[0.2em]">ORDER SUMMARY</h3>
+                <div class="flex flex-col gap-4 font-body-md text-sm mb-8 text-neutral-600">
+                    <div class="flex justify-between"><span class="tracking-wide">Subtotal</span><span class="cart-subtotal-display font-mono font-medium text-neutral-900">Rs <%= subtotal.toLocaleString() %></span></div>
+                    <div class="flex justify-between"><span class="tracking-wide">Estimated Shipping</span><span class="text-emerald-700 text-xs font-semibold uppercase tracking-wider">Complimentary</span></div>
+                </div>
+                <hr class="border-t border-outline-variant/40 mb-6"/>
+                <div class="flex justify-between items-end mb-10">
+                    <span class="font-body-md text-base text-neutral-900 font-medium">Total</span>
+                    <span class="font-mono text-2xl font-bold text-neutral-900 leading-none cart-total-display">Rs <%= subtotal.toLocaleString() %></span>
+                </div>
+                <!-- FIXED: Direct link - session already has cart data -->
+                <a href="/checkout" class="w-full block text-center bg-primary text-on-primary py-4 px-6 font-label-caps text-label-caps font-semibold tracking-[0.2em] hover:bg-neutral-800 transition-all duration-300 active:scale-[0.99] shadow-sm">PROCEED TO CHECKOUT</a>
+            </div>
+        </aside>
+
+        <div class="hidden md:block lg:hidden mt-12 w-full bg-neutral-50 border border-neutral-100 p-8 rounded-sm">
+             <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-secondary font-label-caps text-[11px] tracking-widest">TOTAL VALUE</p>
+                    <p class="text-2xl font-mono font-bold cart-total-display text-neutral-900">Rs <%= subtotal.toLocaleString() %></p>
+                </div>
+                <!-- FIXED: Direct link -->
+                <a href="/checkout" class="bg-primary text-on-primary py-4 px-12 font-label-caps font-semibold tracking-widest hover:bg-neutral-800 transition-colors">CHECKOUT</a>
+             </div>
+        </div>
+    </div>
+</main>
+
+<div id="mobile-checkout-bar" class="<%= (typeof cartItems !== 'undefined' && cartItems.length > 0) ? 'block' : 'hidden' %> md:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant/60 px-margin-mobile py-5 z-40 shadow-lg">
+    <div class="max-w-2xl mx-auto flex flex-col gap-4">
+        <div class="flex justify-between items-center">
+            <span class="font-body-md text-sm text-secondary tracking-wide">Total Subtotal</span>
+            <span class="font-mono text-xl font-bold text-primary cart-total-display">Rs <%= subtotal.toLocaleString() %></span>
+        </div>
+        <!-- FIXED: Direct link -->
+        <a href="/checkout" class="w-full bg-primary text-on-primary font-label-caps text-label-caps font-semibold tracking-widest py-4 flex justify-center items-center gap-2 active:scale-[0.98] transition-transform">
+            SECURE CHECKOUT 
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
+
+<script>
+    function refreshCartUI(cartList) {
+        if (!cartList || cartList.length === 0) {
+            const content = document.getElementById('cart-content');
+            const mobileBar = document.getElementById('mobile-checkout-bar');
+            
+            if(content) content.classList.add('hidden');
+            if(mobileBar) mobileBar.classList.add('hidden');
+            
+            const msg = document.getElementById('empty-cart-message');
+            if(msg) {
+                msg.classList.remove('hidden');
+                msg.classList.add('flex');
+            }
+            document.getElementById('cart-item-count').textContent = "0 Items";
+            return;
+        }
+
+        let subtotal = 0;
+        let totalItems = 0;
+
+        cartList.forEach(item => {
+            subtotal += (item.price * item.quantity);
+            totalItems += item.quantity;
+
+            const article = document.querySelector(`article[data-product-id="${item.id}"]`);
+            if (article) {
+                article.querySelector('.product-qty-display').textContent = item.quantity;
+                article.querySelector('.product-line-total').textContent = `Rs ${(item.price * item.quantity).toLocaleString()}`;
+            }
+        });
+
+        document.getElementById('cart-item-count').textContent = `${totalItems} Items`;
+        document.querySelectorAll('.cart-subtotal-display').forEach(el => el.textContent = `Rs ${subtotal.toLocaleString()}`);
+        document.querySelectorAll('.cart-total-display').forEach(el => el.textContent = `Rs ${subtotal.toLocaleString()}`);
+
+        const headerBadges = document.querySelectorAll('.cart-badge');
+        headerBadges.forEach(b => {
+            b.textContent = totalItems;
+            if(totalItems > 0) b.classList.remove('hidden');
+        });
+    }
+
+    function updateQuantity(productId, action) {
+        fetch('/cart/update-quantity', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: productId, action: action })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (action === 'decrease') {
+                    const targetRow = document.querySelector(`article[data-product-id="${productId}"]`);
+                    if(targetRow) {
+                        const qty = parseInt(targetRow.querySelector('.product-qty-display').textContent);
+                        if(qty <= 1) {
+                            fadeAndRemoveRow(productId);
+                        }
+                    }
+                }
+                refreshCartUI(data.cart);
+            }
+        })
+        .catch(err => console.error("Error updating quantity:", err));
+    }
+
+    function removeItem(productId) {
+        fetch('/cart/remove', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: productId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                fadeAndRemoveRow(productId);
+                setTimeout(() => {
+                    refreshCartUI(data.cart);
+                }, 400);
+            }
+        })
+        .catch(err => console.error("Error removing item:", err));
+    }
+
+    function fadeAndRemoveRow(productId) {
+        const targetArticle = document.querySelector(`article[data-product-id="${productId}"]`);
+        const targetDivider = document.querySelector(`hr[data-divider-id="${productId}"]`);
+        
+        if (targetArticle) {
+            targetArticle.classList.add('opacity-0', 'scale-95', '-translate-x-4');
+            if (targetDivider) targetDivider.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                targetArticle.remove();
+                if (targetDivider) targetDivider.remove();
+            }, 400);
+        }
+    }
+</script>
+
+</body>
+</html>

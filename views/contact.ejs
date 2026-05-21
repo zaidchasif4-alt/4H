@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Contact Us - 4H</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#dadada",
+                        "surface-variant": "#e2e2e2",
+                        "surface": "#f9f9f9",
+                        "background": "#f9f9f9",
+                        "on-tertiary-fixed-variant": "#464747",
+                        "tertiary-container": "#1a1c1c",
+                        "surface-tint": "#5f5e5e",
+                        "on-surface-variant": "#444748",
+                        "primary": "#000000",
+                        "on-primary-container": "#858383",
+                        "inverse-primary": "#c9c6c5",
+                        "surface-bright": "#f9f9f9",
+                        "on-primary-fixed-variant": "#474646",
+                        "inverse-on-surface": "#f0f1f1",
+                        "secondary": "#5d5f5f",
+                        "outline": "#747878",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-tertiary-container": "#838484",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c7c6c6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-container-high": "#e8e8e8",
+                        "surface-container": "#eeeeee",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1c",
+                        "tertiary-fixed": "#e3e2e2",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c4c7c7",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "inverse-surface": "#2f3131",
+                        "tertiary": "#000000",
+                        "secondary-container": "#dcdddd",
+                        "primary-fixed": "#e5e2e1",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-container-low": "#f3f3f4",
+                        "primary-fixed-dim": "#c9c6c5",
+                        "surface-container-highest": "#e2e2e2",
+                        "primary-container": "#1c1b1b",
+                        "on-secondary-container": "#5f6161",
+                        "on-primary-fixed": "#1c1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "container-max-width": "1440px",
+                        "margin-tablet": "40px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "80px",
+                        "section-gap": "160px",
+                        "gutter": "32px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "headline-display": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "headline-display": ["80px", { "lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "32px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        
+        /* Mobile Custom Input Underline Style */
+        .input-underline {
+            border: none;
+            border-bottom: 1px solid theme('colors.primary');
+            border-radius: 0;
+            background-color: transparent;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .input-underline:focus {
+            box-shadow: none;
+            border-bottom-width: 2px;
+            border-color: theme('colors.primary');
+        }
+        .input-underline::placeholder {
+            color: theme('colors.on-primary-container');
+        }
+
+        @media (max-width: 767px) {
+            body {
+                min-height: max(884px, 100dvh);
+            }
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary selection:text-on-primary pt-0 md:pt-0 max-[767px]:pt-[88px]">
+
+    <%- include('partials/header') %>
+
+    <main class="hidden lg:block flex-grow w-full max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop pt-32 pb-section-gap">
+        <section class="mb-section-gap">
+            <h1 class="font-headline-display text-headline-display text-primary mb-6">Get in Touch</h1>
+            <p class="font-body-lg text-body-lg text-secondary max-w-2xl">Expert assistance for the modern minimalist.</p>
+        </section>
+        
+        <section class="grid grid-cols-12 gap-24">
+            <div class="col-span-7 flex flex-col space-y-24">
+                <div>
+                    <h2 class="font-label-caps text-label-caps text-secondary mb-4">EMAIL</h2>
+                    <a class="font-headline-md text-headline-md text-primary hover:text-secondary transition-colors inline-block relative after:content-[''] after:absolute after:w-full after:h-[1px] after:bg-primary after:left-0 after:bottom-1 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left" href="mailto:contact@4hpremium.com">contact@4hpremium.com</a>
+                </div>
+                <div>
+                    <h2 class="font-label-caps text-label-caps text-secondary mb-4">PHONE</h2>
+                    <a class="font-headline-md text-headline-md text-primary hover:text-secondary transition-colors inline-block relative after:content-[''] after:absolute after:w-full after:h-[1px] after:bg-primary after:left-0 after:bottom-1 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left" href="tel:+1800445893">+1 (800) 4H-LUXE</a>
+                </div>
+                <div>
+                    <h2 class="font-label-caps text-label-caps text-secondary mb-4">STUDIOS</h2>
+                    <div class="space-y-8">
+                        <div>
+                            <p class="font-body-lg text-body-lg text-primary">Studio 4H, London</p>
+                            <p class="font-body-md text-body-md text-secondary">Mayfair District</p>
+                        </div>
+                        <div>
+                            <p class="font-body-lg text-body-lg text-primary">Studio 4H, Dubai</p>
+                            <p class="font-body-md text-body-md text-secondary">Design District</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-5">
+                <form class="flex flex-col space-y-12">
+                    <div class="relative">
+                        <input class="w-full bg-transparent border-0 border-b border-outline px-0 py-4 font-body-md text-body-md text-primary placeholder-outline focus:ring-0 focus:border-primary transition-colors peer" id="desktop-name" name="name" placeholder="Name" required="" type="text"/>
+                    </div>
+                    <div class="relative">
+                        <input class="w-full bg-transparent border-0 border-b border-outline px-0 py-4 font-body-md text-body-md text-primary placeholder-outline focus:ring-0 focus:border-primary transition-colors peer" id="desktop-email" name="email" placeholder="Email" required="" type="email"/>
+                    </div>
+                    <div class="relative">
+                        <input class="w-full bg-transparent border-0 border-b border-outline px-0 py-4 font-body-md text-body-md text-primary placeholder-outline focus:ring-0 focus:border-primary transition-colors peer" id="desktop-subject" name="subject" placeholder="Subject" type="text"/>
+                    </div>
+                    <div class="relative">
+                        <textarea class="w-full bg-transparent border-0 border-b border-outline px-0 py-4 font-body-md text-body-md text-primary placeholder-outline focus:ring-0 focus:border-primary transition-colors resize-none peer" id="desktop-message" name="message" placeholder="Message" required="" rows="4"></textarea>
+                    </div>
+                    <button class="self-start mt-8 bg-primary text-on-primary font-label-caps text-label-caps px-12 py-5 hover:bg-secondary transition-colors duration-300" type="submit">
+                        SEND MESSAGE
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <main class="lg:hidden flex-grow flex flex-col px-margin-mobile md:px-margin-desktop max-w-container-max-width mx-auto w-full pb-[100px] md:pb-0">
+        <section class="mt-8 md:mt-24 mb-16 md:mb-32">
+            <h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-display md:text-headline-display text-primary tracking-tighter">Get in Touch</h1>
+            <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-2xl">We welcome your inquiries and are dedicated to providing you with exceptional service. Please reach out using the details below or our secure form.</p>
+        </section>
+        
+        <div class="flex flex-col md:flex-row gap-16 md:gap-32 w-full">
+            <aside class="w-full md:w-1/3 flex flex-col gap-12">
+                <div>
+                    <h2 class="font-label-caps text-label-caps text-primary mb-6 border-b border-primary pb-2 inline-block">CLIENT RELATIONS</h2>
+                    <div class="flex flex-col gap-8">
+                        <div class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-secondary" data-icon="mail" data-weight="fill" style="font-variation-settings: 'FILL' 1;">mail</span>
+                            <div>
+                                <p class="font-body-md text-body-md text-primary">inquiries@4h-premium.com</p>
+                                <p class="font-label-md text-label-md text-secondary mt-1">Average response: 24h</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-secondary" data-icon="call" data-weight="fill" style="font-variation-settings: 'FILL' 1;">call</span>
+                            <div>
+                                <p class="font-body-md text-body-md text-primary">+1 (800) 555-0199</p>
+                                <p class="font-label-md text-label-md text-secondary mt-1">Mon-Fri, 9am - 6pm EST</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-secondary" data-icon="location_on" data-weight="fill" style="font-variation-settings: 'FILL' 1;">location_on</span>
+                            <div>
+                                <p class="font-body-md text-body-md text-primary">100 Premium Way</p>
+                                <p class="font-body-md text-body-md text-primary">Suite 400</p>
+                                <p class="font-body-md text-body-md text-primary">New York, NY 10001</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <section class="w-full md:w-2/3">
+                <form class="flex flex-col gap-10">
+                    <div class="flex flex-col gap-2">
+                        <label class="font-label-caps text-label-caps text-secondary sr-only" for="mobile-name">Name</label>
+                        <input class="input-underline font-body-lg text-body-lg text-primary w-full pb-4 outline-none focus:ring-0" id="mobile-name" name="name" placeholder="Full Name" type="text"/>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="font-label-caps text-label-caps text-secondary sr-only" for="mobile-email">Email</label>
+                        <input class="input-underline font-body-lg text-body-lg text-primary w-full pb-4 outline-none focus:ring-0" id="mobile-email" name="email" placeholder="Email Address" type="email"/>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="font-label-caps text-label-caps text-secondary sr-only" for="mobile-subject">Subject</label>
+                        <input class="input-underline font-body-lg text-body-lg text-primary w-full pb-4 outline-none focus:ring-0" id="mobile-subject" name="subject" placeholder="Subject" type="text"/>
+                    </div>
+                    <div class="flex flex-col gap-2 pt-4">
+                        <label class="font-label-caps text-label-caps text-secondary sr-only" for="mobile-message">Message</label>
+                        <textarea class="input-underline font-body-lg text-body-lg text-primary w-full pb-4 outline-none focus:ring-0 resize-none" id="mobile-message" name="message" placeholder="Your Message" rows="4"></textarea>
+                    </div>
+                    <div class="mt-8">
+                        <button class="w-full bg-primary text-on-primary font-label-caps text-label-caps py-6 hover:bg-secondary transition-colors duration-300" type="button">
+                            SEND MESSAGE
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 w-full z-50 rounded-t-xl md:hidden bg-surface/95 backdrop-blur-lg dark:bg-surface-container-highest/95 text-primary dark:text-on-primary-fixed font-label-caps text-label-caps pb-safe flex justify-around items-center h-20 px-margin-mobile">
+        <a class="flex flex-col items-center justify-center text-secondary dark:text-on-secondary-container opacity-50 active:opacity-70 scale-95 transition-transform duration-150" href="#">
+            <span class="material-symbols-outlined mb-1" data-icon="storefront">storefront</span>
+            Shop
+        </a>
+        <a class="flex flex-col items-center justify-center text-secondary dark:text-on-secondary-container opacity-50 active:opacity-70 scale-95 transition-transform duration-150" href="#">
+            <span class="material-symbols-outlined mb-1" data-icon="auto_awesome_motion">auto_awesome_motion</span>
+            Collections
+        </a>
+        <a class="flex flex-col items-center justify-center text-secondary dark:text-on-secondary-container opacity-50 active:opacity-70 scale-95 transition-transform duration-150" href="#">
+            <span class="material-symbols-outlined mb-1" data-icon="shopping_bag">shopping_bag</span>
+            Bag
+        </a>
+        <a class="flex flex-col items-center justify-center text-secondary dark:text-on-secondary-container opacity-50 active:opacity-70 scale-95 transition-transform duration-150" href="#">
+            <span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+            Profile
+        </a>
+    </nav>
+
+    <%- include('partials/footer') %>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>About Us - 4H Premium Store</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#5f5e5e",
+                        "on-primary-fixed": "#1c1b1b",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-primary-container": "#858383",
+                        "on-background": "#1a1c1c",
+                        "primary-fixed-dim": "#c9c6c5",
+                        "outline": "#747878",
+                        "surface-variant": "#e2e2e2",
+                        "inverse-primary": "#c9c6c5",
+                        "primary-container": "#1c1b1b",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#838484",
+                        "tertiary": "#000000",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "primary-fixed": "#e5e2e1",
+                        "surface-container-low": "#f3f3f4",
+                        "tertiary-fixed-dim": "#c7c6c6",
+                        "tertiary-fixed": "#e3e2e2",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#dadada",
+                        "surface": "#f9f9f9",
+                        "outline-variant": "#c4c7c7",
+                        "on-secondary-container": "#5f6161",
+                        "surface-container-high": "#e8e8e8",
+                        "secondary": "#5d5f5f",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#474646",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary-fixed-variant": "#464747",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#dcdddd",
+                        "on-surface-variant": "#444748",
+                        "background": "#f9f9f9",
+                        "tertiary-container": "#1a1c1c",
+                        "on-error": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "primary": "#000000",
+                        "inverse-on-surface": "#f0f1f1",
+                        "inverse-surface": "#2f3131",
+                        "on-surface": "#1a1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "32px",
+                        "container-max-width": "1440px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "80px",
+                        "section-gap": "160px",
+                        "unit": "8px",
+                        "margin-tablet": "40px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-display": ["Playfair Display"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "32px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "600" }],
+                        "headline-display": ["80px", { "lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col selection:bg-surface-dim selection:text-on-background">
+
+<%- include('partials/header') %>
+
+<main class="flex-grow pt-[104px] md:pt-32 pb-section-gap">
+    
+    <section class="hidden md:block w-full h-[80vh] min-h-[600px] relative mb-section-gap">
+        <div class="absolute inset-0 bg-primary/20 z-10"></div>
+        <img alt="" class="w-full h-full object-cover absolute inset-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyoTpaIuk_VqYbY2ypS4ex--Xqi3uEgkyxOkFKYBFum8RaaQuWoMKo4zHIn85uK5dTNvVzqhq5QMXOHquQaLy8mjumStw98btfuULmjv85Mq2Ygf8wIJ8NuOjlGPWzVR7FpJ_OUKFidg_TKTLaJxtgWPAThK0oQhvEfGopH8pWiMveMfoJV6p9X5Pec15X45JKeXCddIKr2WjZ1Kr9FRH9dqcUVurSiH9qjFRUUxXhhzBxtiA8Qkq91Ys5YpTCndnnRXp9qWOGg3U"/>
+        <div class="relative z-20 w-full h-full flex items-center justify-center">
+            <h1 class="font-headline-display text-headline-display text-on-primary text-center px-margin-desktop">
+                The 4H Philosophy
+            </h1>
+        </div>
+    </section>
+
+    <section class="block md:hidden px-margin-mobile max-w-container-max-width mx-auto mb-section-gap">
+        <h1 class="font-headline-lg-mobile text-headline-lg-mobile mb-8">The 4H Philosophy</h1>
+        <div class="w-full relative overflow-hidden" style="padding-bottom: 125%;">
+            <img alt="About Us Hero" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyoTpaIuk_VqYbY2ypS4ex--Xqi3uEgkyxOkFKYBFum8RaaQuWoMKo4zHIn85uK5dTNvVzqhq5QMXOHquQaLy8mjumStw98btfuULmjv85Mq2Ygf8wIJ8NuOjlGPWzVR7FpJ_OUKFidg_TKTLaJxtgWPAThK0oQhvEfGopH8pWiMveMfoJV6p9X5Pec15X45JKeXCddIKr2WjZ1Kr9FRH9dqcUVurSiH9qjFRUUxXhhzBxtiA8Qkq91Ys5YpTCndnnRXp9qWOGg3U"/>
+        </div>
+        <div class="mt-12">
+            <div>
+                <p class="font-body-lg text-body-lg text-secondary mb-8">
+                    Founded on the principles of restraint and architectural precision, 4H Premium Store represents a departure from the noise of modern commerce. We believe that true luxury whispers; it does not shout. Our curation process is rigorous, selecting only pieces that embody our commitment to substance over flash.
+                </p>
+                <p class="font-body-lg text-body-lg text-secondary">
+                    Every item we present is a testament to meticulous craftsmanship and timeless design. We invite you to experience an aesthetic of calm confidence, where the void is as important as the object itself, and high-fidelity materials command your full attention.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="hidden md:block max-w-container-max-width mx-auto px-margin-desktop mb-section-gap">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+            <div class="md:col-span-5 md:col-start-2">
+                <img alt="" class="w-full h-auto object-cover aspect-[0.73]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6-Xh-t4ZgKTo8sgz_4yybEms73oppf4UAp_XBJ3bPxhGjf6glk7NTZ1EEJy-ZZx99QPMOAPHrpg2HBUkx0SBiwdRl0SA00YbDs1c-4n1G7_guM1qbAhg-Nz2DecUpkN-BAkRv4b9xfX74ZkzHZVbvlunjyED5a8LhGcRgTTvDy9_cH1rrnX0oTMk4Kkr66x5ykGXwwygSOTdwx2iVYpVgdx4-OsLEj8MNVVmoJhNcrG3WTN-_1SiLrGY1QeVLIBOS8PQywOA3_IE"/>
+            </div>
+            <div class="md:col-span-4 md:col-start-8 flex flex-col gap-8">
+                <h2 class="font-headline-lg text-headline-lg text-primary">Uncompromising Craft</h2>
+                <div class="font-body-lg text-body-lg text-secondary flex flex-col gap-6">
+                    <p>At 4H Premium Store, we believe that true luxury whispers. It does not demand attention; it commands respect through an unwavering commitment to quality and architectural precision.</p>
+                    <p>Our philosophy is rooted in minimalism and the celebration of raw, premium materials. Every piece is designed with an obsessive focus on negative space, ensuring that what remains is nothing short of essential.</p>
+                    <p>We reject the ephemeral in favor of the enduring. This is the new standard of Quiet Luxury.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hidden md:block max-w-container-max-width mx-auto px-margin-desktop mb-section-gap">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+            <div class="flex flex-col gap-4 border-t border-outline-variant pt-8">
+                <span class="font-label-caps text-label-caps text-secondary tracking-widest">01</span>
+                <h3 class="font-headline-md text-headline-md text-primary">Quality</h3>
+                <p class="font-body-md text-body-md text-secondary">Sourcing only the finest materials, our craftsmanship is rigorous and exacting, resulting in pieces designed to transcend generations.</p>
+            </div>
+            <div class="flex flex-col gap-4 border-t border-outline-variant pt-8">
+                <span class="font-label-caps text-label-caps text-secondary tracking-widest">02</span>
+                <h3 class="font-headline-md text-headline-md text-primary">Exclusivity</h3>
+                <p class="font-body-md text-body-md text-secondary">Produced in strictly limited quantities, ensuring that every artifact retains its rarity and narrative distinctiveness.</p>
+            </div>
+            <div class="flex flex-col gap-4 border-t border-outline-variant pt-8">
+                <span class="font-label-caps text-label-caps text-secondary tracking-widest">03</span>
+                <h3 class="font-headline-md text-headline-md text-primary">Sustainability</h3>
+                <p class="font-body-md text-body-md text-secondary">A considered approach to creation that values environmental stewardship without ever compromising on the ultimate aesthetic experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="block md:hidden px-margin-mobile max-w-container-max-width mx-auto mb-section-gap">
+        <h2 class="font-headline-md text-headline-md mb-16">Core Principles</h2>
+        <div class="flex flex-col gap-16">
+            <div class="flex flex-col">
+                <span class="font-label-caps text-label-caps text-secondary mb-4">01</span>
+                <div class="border-b border-outline-variant pb-8">
+                    <h3 class="font-headline-md text-headline-md mb-4">Quality</h3>
+                    <p class="font-body-lg text-body-lg text-secondary">Uncompromising material selection and flawless execution form the foundation of our offerings. We partner exclusively with artisans who share our dedication to longevity.</p>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-label-caps text-label-caps text-secondary mb-4">02</span>
+                <div class="border-b border-outline-variant pb-8">
+                    <h3 class="font-headline-md text-headline-md mb-4">Exclusivity</h3>
+                    <p class="font-body-lg text-body-lg text-secondary">Our collections are strictly limited, ensuring that each piece retains its intrinsic value and distinct presence within your personal curation.</p>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-label-caps text-label-caps text-secondary mb-4">03</span>
+                <div class="pb-8">
+                    <h3 class="font-headline-md text-headline-md mb-4">Sustainability</h3>
+                    <p class="font-body-lg text-body-lg text-secondary">True sustainability is born from creating pieces that endure. We champion designs that transcend transient trends, intended to be passed down through generations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<%- include('partials/footer') %>
+
+</body>
+</html>

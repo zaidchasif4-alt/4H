@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Site Settings — 4H Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f8f8f8; }
+        .input-field { width:100%; border:1px solid #e5e7eb; padding:10px 14px; font-size:13px; border-radius:4px; transition:border .2s; outline:none; background:white; }
+        .input-field:focus { border-color:#0a0a0a; }
+        .label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.15em; color:#6b7280; margin-bottom:6px; display:block; }
+        .preview-img { width:100%; height:120px; object-fit:cover; border-radius:4px; background:#f3f4f6; border:1px solid #e5e7eb; }
+        .section-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.2em; color:#0a0a0a; padding-bottom:12px; border-bottom:1px solid #e5e7eb; margin-bottom:20px; }
+    </style>
+</head>
+<body>
+
+<% if (typeof query !== 'undefined' && query && query.saved) { %>
+<div style="background:#d1fae5;border:1px solid #6ee7b7;padding:12px 20px;font-size:12px;color:#065f46;font-weight:600;text-align:center;">
+    ✓ Settings saved successfully!
+</div>
+<% } %>
+
+<div class="max-w-4xl mx-auto px-6 py-10">
+    <div class="mb-8">
+        <h1 style="font-size:22px;font-weight:700;color:#0a0a0a;">Site Settings</h1>
+        <p style="font-size:12px;color:#6b7280;margin-top:4px;">Control hero images, headlines, marquee text and WhatsApp number from here.</p>
+    </div>
+
+    <form action="/admin/settings" method="POST" class="space-y-8">
+
+        <!-- HERO IMAGES -->
+        <div class="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+            <p class="section-title">Hero Slideshow Images</p>
+            <p style="font-size:11px;color:#9ca3af;margin-bottom:20px;">Paste direct image URLs. These appear on the home page slideshow. Use high quality images (1920×1080 or bigger).</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Slide 1 -->
+                <div>
+                    <label class="label">Slide 1 — Main Hero</label>
+                    <input type="text" name="heroImage1" value="<%= settings.heroImage1 || '' %>"
+                        class="input-field mb-3" placeholder="https://..." id="img1"
+                        oninput="previewImg(this.value,'prev1')"/>
+                    <img id="prev1" class="preview-img" src="<%= settings.heroImage1 || '' %>" alt="Preview 1"
+                         onerror="this.style.display='none'" style="<%= settings.heroImage1 ? '' : 'display:none' %>"/>
+                </div>
+                <!-- Slide 2 -->
+                <div>
+                    <label class="label">Slide 2</label>
+                    <input type="text" name="heroImage2" value="<%= settings.heroImage2 || '' %>"
+                        class="input-field mb-3" placeholder="https://..." id="img2"
+                        oninput="previewImg(this.value,'prev2')"/>
+                    <img id="prev2" class="preview-img" src="<%= settings.heroImage2 || '' %>" alt="Preview 2"
+                         onerror="this.style.display='none'" style="<%= settings.heroImage2 ? '' : 'display:none' %>"/>
+                </div>
+                <!-- Slide 3 -->
+                <div>
+                    <label class="label">Slide 3</label>
+                    <input type="text" name="heroImage3" value="<%= settings.heroImage3 || '' %>"
+                        class="input-field mb-3" placeholder="https://..." id="img3"
+                        oninput="previewImg(this.value,'prev3')"/>
+                    <img id="prev3" class="preview-img" src="<%= settings.heroImage3 || '' %>" alt="Preview 3"
+                         onerror="this.style.display='none'" style="<%= settings.heroImage3 ? '' : 'display:none' %>"/>
+                </div>
+            </div>
+        </div>
+
+        <!-- HERO TEXT -->
+        <div class="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+            <p class="section-title">Hero Text Content</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                    <label class="label">Main Headline</label>
+                    <textarea name="heroHeadline" class="input-field" rows="3"
+                        placeholder="Time Is The&#10;Ultimate Luxury."><%= settings.heroHeadline || '' %></textarea>
+                    <p style="font-size:10px;color:#9ca3af;margin-top:4px;">Use newline for line break on homepage</p>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="label">Subheadline (small text above headline)</label>
+                        <input type="text" name="heroSubheadline" value="<%= settings.heroSubheadline || '' %>"
+                            class="input-field" placeholder="The Autumn Curation — 2025"/>
+                    </div>
+                    <div>
+                        <label class="label">Brand Tagline (quote section)</label>
+                        <input type="text" name="heroTagline" value="<%= settings.heroTagline || '' %>"
+                            class="input-field" placeholder="Precision. Craftsmanship. Legacy."/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MARQUEE + WHATSAPP -->
+        <div class="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+            <p class="section-title">Marquee & Contact</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                    <label class="label">Marquee Text (comma separated)</label>
+                    <textarea name="marqueeText" class="input-field" rows="3"
+                        placeholder="Swiss Movement,Limited Edition,Luxury Timepieces"><%= settings.marqueeText || '' %></textarea>
+                    <p style="font-size:10px;color:#9ca3af;margin-top:4px;">Each item separated by comma</p>
+                </div>
+                <div>
+                    <label class="label">WhatsApp Number (with country code)</label>
+                    <input type="text" name="whatsappNumber" value="<%= settings.whatsappNumber || '' %>"
+                        class="input-field" placeholder="923001234567"/>
+                    <p style="font-size:10px;color:#9ca3af;margin-top:4px;">No + or spaces, e.g. 923001234567</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAVE -->
+        <div class="flex items-center justify-between">
+            <a href="/admin" style="font-size:12px;color:#6b7280;text-decoration:underline;">← Back to Dashboard</a>
+            <button type="submit"
+                style="background:#0a0a0a;color:white;padding:12px 32px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;border:none;border-radius:4px;cursor:pointer;transition:background .2s;"
+                onmouseover="this.style.background='#b8975a'" onmouseout="this.style.background='#0a0a0a'">
+                Save Settings
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+function previewImg(url, previewId) {
+    const img = document.getElementById(previewId);
+    if (!url) { img.style.display = 'none'; return; }
+    img.src = url;
+    img.style.display = 'block';
+    img.onerror = () => img.style.display = 'none';
+}
+
+// Pass saved=1 to show success message
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('saved') === '1') {
+    setTimeout(() => {
+        const banner = document.querySelector('[style*="d1fae5"]');
+        if (banner) banner.style.display = 'none';
+    }, 4000);
+}
+</script>
+</body>
+</html>

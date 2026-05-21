@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title><%= product.title %> — 4H Luxury</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Tenor+Sans&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --bone: #f5f2ee;
+            --warm-white: #faf9f7;
+            --gold: #b8975a;
+            --gold-light: #d4b483;
+            --mid: #6b6560;
+            --border: rgba(10,10,10,0.10);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--warm-white);
+            color: var(--ink);
+            cursor: none;
+        }
+
+        .font-display { font-family: 'Cormorant Garamond', serif; }
+        .font-label { font-family: 'Tenor Sans', sans-serif; }
+
+        /* Cursor */
+        #cursor {
+            width: 8px; height: 8px;
+            background: var(--ink);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+            mix-blend-mode: difference;
+        }
+
+        /* Grain */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9990;
+            opacity: 0.4;
+        }
+
+        /* Page animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .anim-1 { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s both; }
+        .anim-2 { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both; }
+        .anim-3 { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s both; }
+        .anim-4 { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s both; }
+        .anim-5 { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.5s both; }
+        .anim-img { animation: fadeIn 1.2s cubic-bezier(0.16,1,0.3,1) 0.05s both; }
+
+        /* Thumbnail */
+        .thumb {
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .thumb:hover { border-color: var(--ink); }
+        .thumb.active { border-color: var(--gold); }
+
+        /* Main image */
+        #masterImg {
+            transition: opacity 0.4s ease, transform 0.6s ease;
+        }
+        #masterImg.loading { opacity: 0.3; transform: scale(0.99); }
+
+        /* Add to cart button */
+        .btn-cart {
+            position: relative;
+            overflow: hidden;
+            background: var(--ink);
+            color: white;
+            border: none;
+            transition: background 0.4s ease;
+        }
+        .btn-cart::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gold);
+            transform: translateX(-101%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-cart:hover::before { transform: translateX(0); }
+        .btn-cart span { position: relative; z-index: 1; }
+
+        /* Details accordion */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .accordion-content.open { max-height: 300px; }
+        .accordion-icon { transition: transform 0.3s ease; }
+        .accordion-icon.open { transform: rotate(45deg); }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        .gold-line {
+            display: inline-block;
+            width: 36px; height: 1px;
+            background: var(--gold);
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        /* Mobile thumbnails */
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .material-symbols-outlined { font-size: 18px; line-height: 1; display: inline-block; vertical-align: middle; }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--warm-white); }
+        ::-webkit-scrollbar-thumb { background: var(--ink); border-radius: 2px; }
+
+        /* Main image smooth transition */
+        #masterImg {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+
+<%- include('partials/header') %>
+
+<main class="max-w-[1440px] mx-auto px-4 sm:px-12 lg:px-20 pt-10 md:pt-20 pb-24">
+
+    <!-- Breadcrumb -->
+    <nav class="anim-1 flex items-center gap-2 mb-10 md:mb-14">
+        <a href="/" class="font-label text-[9px] uppercase tracking-[0.25em] text-[var(--mid)] hover:text-[var(--ink)] transition-colors">Home</a>
+        <span class="text-[var(--mid)] text-xs">›</span>
+        <a href="/collection" class="font-label text-[9px] uppercase tracking-[0.25em] text-[var(--mid)] hover:text-[var(--ink)] transition-colors">Collection</a>
+        <span class="text-[var(--mid)] text-xs">›</span>
+        <span class="font-label text-[9px] uppercase tracking-[0.25em] text-[var(--ink)]"><%= product.title %></span>
+    </nav>
+
+    <!-- ===== MAIN PRODUCT LAYOUT ===== -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 xl:gap-24">
+
+        <!-- LEFT: Images -->
+        <div class="flex flex-col-reverse md:flex-row gap-4 anim-img">
+
+            <!-- Thumbnails -->
+            <% if(product.images && product.images.length > 1) { %>
+                <div class="flex flex-row md:flex-col gap-2.5 overflow-x-auto md:overflow-y-auto hide-scroll md:w-[72px] w-full shrink-0 md:max-h-[580px] py-0.5">
+                    <% product.images.forEach((img, i) => { %>
+                        <button
+                            onclick="switchImage('<%= img %>', this)"
+                            class="thumb shrink-0 md:w-full w-16 aspect-[3/4] overflow-hidden bg-[var(--bone)] rounded-sm focus:outline-none <%= i === 0 ? 'active' : '' %>">
+                            <img src="<%= img %>" alt="View <%= i + 1 %>" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                        </button>
+                    <% }); %>
+                </div>
+            <% } %>
+
+            <!-- Main image -->
+            <div class="relative grow aspect-[3/4] bg-[var(--bone)] overflow-hidden shadow-md rounded-sm max-h-[600px]">
+
+                <% if(product.isOnSale && product.salePrice) { %>
+                    <span class="absolute top-4 left-4 z-10 font-label text-[8px] uppercase tracking-[0.2em] bg-[var(--ink)] text-white px-3 py-1.5">
+                        Sale
+                    </span>
+                <% } %>
+
+                <img
+                    id="masterImg"
+                    src="<%= product.cardImageUrl %>"
+                    alt="<%= product.title %>"
+                    class="w-full h-full object-cover object-center"
+                    onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800';"
+                />
+
+                <!-- Zoom hint -->
+                <div class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm px-3 py-1.5 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" id="zoomHint">
+                    <span class="material-symbols-outlined text-[14px] text-[var(--mid)]">zoom_in</span>
+                    <span class="font-label text-[8px] uppercase tracking-[0.2em] text-[var(--mid)]">Zoom</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Product info -->
+        <div class="flex flex-col justify-center lg:py-4">
+
+            <!-- Category -->
+            <div class="anim-2 flex items-center gap-3 mb-4">
+                <span class="gold-line"></span>
+                <span class="font-label text-[9px] uppercase tracking-[0.4em] text-[var(--gold)]">
+                    <%= product.category ? product.category.name : 'Premium Collection' %>
+                </span>
+            </div>
+
+            <!-- Title -->
+            <h1 class="anim-3 font-display font-light leading-tight mb-6" style="font-size: clamp(2rem, 4vw, 4rem);">
+                <%= product.title %>
+            </h1>
+
+            <!-- Price -->
+            <div class="anim-4 mb-8">
+                <% if(product.isOnSale && product.salePrice) { %>
+                    <div class="flex items-baseline gap-4">
+                        <span class="font-display text-3xl font-light text-[var(--ink)]">
+                            PKR <%= product.salePrice.toLocaleString() %>
+                        </span>
+                        <del class="font-label text-sm text-[var(--mid)]">PKR <%= product.basePrice.toLocaleString() %></del>
+                        <span class="font-label text-[9px] uppercase tracking-[0.2em] text-white bg-[var(--gold)] px-2 py-1">
+                            Save <%= Math.round((1 - product.salePrice/product.basePrice)*100) %>%
+                        </span>
+                    </div>
+                <% } else { %>
+                    <span class="font-display text-3xl font-light">PKR <%= product.basePrice.toLocaleString() %></span>
+                <% } %>
+                <p class="font-label text-[9px] uppercase tracking-[0.25em] text-[var(--mid)] mt-2">Free delivery included</p>
+            </div>
+
+            <!-- Divider -->
+            <div class="w-full h-px bg-[var(--border)] mb-8 anim-4"></div>
+
+            <!-- Add to cart -->
+            <div class="anim-5">
+                <form action="/add-to-cart" method="POST" id="atcForm">
+                    <input type="hidden" name="id" value="<%= product._id %>">
+                    <input type="hidden" name="name" value="<%= product.title %>">
+                    <input type="hidden" name="price" value="<%= (product.isOnSale && product.salePrice) ? product.salePrice : product.basePrice %>">
+                    <input type="hidden" name="image" value="<%= product.cardImageUrl %>">
+
+                    <button type="submit" id="atcBtn" class="btn-cart w-full py-4 font-label text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-3 focus:outline-none">
+                        <span class="material-symbols-outlined text-sm">shopping_bag</span>
+                        <span>Add to Bag</span>
+                    </button>
+                </form>
+
+                <a href="/collection" class="mt-4 w-full block text-center font-label text-[9px] uppercase tracking-[0.3em] text-[var(--mid)] border border-[var(--border)] py-4 hover:border-[var(--ink)] hover:text-[var(--ink)] transition-all duration-300">
+                    Continue Shopping
+                </a>
+            </div>
+
+            <!-- Details accordion -->
+            <div class="mt-10 space-y-0 anim-5">
+
+                <!-- Description -->
+                <div class="border-t border-[var(--border)]">
+                    <button onclick="toggleAccordion('desc')" class="w-full flex items-center justify-between py-5 focus:outline-none group">
+                        <span class="font-label text-[9px] uppercase tracking-[0.3em] text-[var(--ink)]">Description</span>
+                        <span class="accordion-icon material-symbols-outlined text-[var(--mid)] group-hover:text-[var(--ink)] transition-colors" id="desc-icon">add</span>
+                    </button>
+                    <div id="desc" class="accordion-content">
+                        <p class="font-display font-light text-base text-[var(--mid)] leading-relaxed pb-6 pr-8">
+                            <%= product.description || 'A distinguished piece from the 4H collection, crafted with meticulous attention to detail and premium materials.' %>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Delivery -->
+                <div class="border-t border-[var(--border)]">
+                    <button onclick="toggleAccordion('delivery')" class="w-full flex items-center justify-between py-5 focus:outline-none group">
+                        <span class="font-label text-[9px] uppercase tracking-[0.3em] text-[var(--ink)]">Delivery & Returns</span>
+                        <span class="accordion-icon material-symbols-outlined text-[var(--mid)] group-hover:text-[var(--ink)] transition-colors" id="delivery-icon">add</span>
+                    </button>
+                    <div id="delivery" class="accordion-content">
+                        <div class="pb-6 pr-8 space-y-3">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[var(--gold)] text-sm">local_shipping</span>
+                                <span class="font-label text-[9px] uppercase tracking-[0.2em] text-[var(--mid)]">Free delivery across Pakistan</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[var(--gold)] text-sm">schedule</span>
+                                <span class="font-label text-[9px] uppercase tracking-[0.2em] text-[var(--mid)]">3–7 business days</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[var(--gold)] text-sm">payments</span>
+                                <span class="font-label text-[9px] uppercase tracking-[0.2em] text-[var(--mid)]">Cash on Delivery available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Care -->
+                <div class="border-t border-b border-[var(--border)]">
+                    <button onclick="toggleAccordion('care')" class="w-full flex items-center justify-between py-5 focus:outline-none group">
+                        <span class="font-label text-[9px] uppercase tracking-[0.3em] text-[var(--ink)]">Care Instructions</span>
+                        <span class="accordion-icon material-symbols-outlined text-[var(--mid)] group-hover:text-[var(--ink)] transition-colors" id="care-icon">add</span>
+                    </button>
+                    <div id="care" class="accordion-content">
+                        <p class="font-label text-[9px] uppercase tracking-[0.2em] text-[var(--mid)] leading-loose pb-6 pr-8">
+                            Handle with care · Store in cool, dry place · Avoid direct sunlight · Clean with soft cloth
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== TRUST STRIP ===== -->
+    <div class="mt-20 py-10 border-y border-[var(--border)] grid grid-cols-2 md:grid-cols-4 gap-6 reveal">
+        <% [
+            ['verified', 'Authentic', '100% Genuine Products'],
+            ['local_shipping', 'Free Delivery', 'All Orders Nationwide'],
+            ['payments', 'Cash on Delivery', 'Safe & Convenient'],
+            ['support_agent', 'Support', 'Dedicated Customer Care']
+        ].forEach(([icon, title, sub]) => { %>
+            <div class="flex items-start gap-4">
+                <span class="material-symbols-outlined text-[var(--gold)]"><%= icon %></span>
+                <div>
+                    <p class="font-label text-[9px] uppercase tracking-[0.25em] text-[var(--ink)] mb-1"><%= title %></p>
+                    <p class="font-label text-[8px] uppercase tracking-[0.15em] text-[var(--mid)]"><%= sub %></p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+</main>
+
+<%- include('partials/footer') %>
+
+<script>
+    // ── Cursor ────────────────────────────────────────────────────────────────
+    const cur = document.getElementById('cursor');
+    if (cur) {
+        document.addEventListener('mousemove', e => {
+            cur.style.left    = e.clientX + 'px';
+            cur.style.top     = e.clientY + 'px';
+            cur.style.opacity = '1';
+        });
+        document.addEventListener('mouseleave', () => { cur.style.opacity = '0'; });
+        document.addEventListener('mouseover', e => {
+            if (e.target.closest('a, button')) {
+                cur.style.width = '10px'; cur.style.height = '10px'; cur.style.background = '#0a0a0a';
+            } else {
+                cur.style.width = '6px'; cur.style.height = '6px'; cur.style.background = '#b8975a';
+            }
+        });
+    }
+
+    // ── Image switcher (FIXED) ────────────────────────────────────────────────
+    function switchImage(src, btn) {
+        const img = document.getElementById('masterImg');
+        if (!img) return;
+        // Fade out
+        img.style.opacity = '0.3';
+        img.style.transform = 'scale(0.99)';
+        // Remove active from all thumbs, set clicked one active
+        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+        // Swap image after short delay
+        setTimeout(() => {
+            img.src = src;
+            img.style.opacity = '1';
+            img.style.transform = 'scale(1)';
+        }, 200);
+    }
+
+    // ── Accordion ─────────────────────────────────────────────────────────────
+    function toggleAccordion(id) {
+        const content = document.getElementById(id);
+        const icon    = document.getElementById(id + '-icon');
+        const isOpen  = content.classList.contains('open');
+        document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('open'));
+        document.querySelectorAll('.accordion-icon').forEach(i => { i.classList.remove('open'); i.textContent = 'add'; });
+        if (!isOpen) {
+            content.classList.add('open');
+            icon.classList.add('open');
+            icon.textContent = 'remove';
+        }
+    }
+
+    // ── Scroll reveal ─────────────────────────────────────────────────────────
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ── Add to cart feedback ──────────────────────────────────────────────────
+    const atcForm = document.getElementById('atcForm');
+    if (atcForm) {
+        atcForm.addEventListener('submit', function() {
+            const btn = document.getElementById('atcBtn');
+            if (btn) {
+                btn.innerHTML = '<span class="material-symbols-outlined text-sm">check</span><span>Added to Bag</span>';
+                btn.style.background = '#2d6a4f';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

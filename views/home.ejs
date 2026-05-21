@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>4H Timepieces — Luxury Watches</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Tenor+Sans&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        :root{--ink:#0a0a0a;--bone:#f0ede8;--warm-white:#faf9f7;--gold:#b8975a;--gold-light:#d4b483;--mid:#6b6560;--border:rgba(10,10,10,0.08);}
+        *,*::before,*::after{box-sizing:border-box;} html{cursor:none;scroll-behavior:smooth;}
+        body{font-family:'DM Sans',sans-serif;background:var(--warm-white);color:var(--ink);overflow-x:hidden;}
+        .font-display{font-family:'Cormorant Garamond',serif;} .font-label{font-family:'Tenor Sans',sans-serif;}
+        body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9000;opacity:.5;}
+        .reveal{opacity:0;transform:translateY(32px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+        .reveal.visible{opacity:1;transform:none;}
+        .d1{transition-delay:.05s}.d2{transition-delay:.13s}.d3{transition-delay:.21s}.d4{transition-delay:.29s}
+        .d5{transition-delay:.37s}.d6{transition-delay:.45s}.d7{transition-delay:.53s}.d8{transition-delay:.61s}
+        .hero-slide{position:absolute;inset:0;transition:opacity 1.2s ease;}
+        .hero-slide.active{opacity:1;z-index:1;} .hero-slide.inactive{opacity:0;z-index:0;}
+        .hero-img-inner{width:100%;height:100%;object-fit:cover;object-position:center;transform:scale(1.05);transition:transform 8s ease;}
+        .hero-slide.active .hero-img-inner{transform:scale(1.0);}
+        @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+        .marquee-track{display:flex;width:max-content;animation:marquee 30s linear infinite;}
+        .marquee-track:hover{animation-play-state:paused;}
+        @keyframes wordUp{from{opacity:0;transform:translateY(100%)}to{opacity:1;transform:translateY(0)}}
+        .word-wrap{display:inline-block;overflow:hidden;}
+        .word-wrap span{display:inline-block;animation:wordUp 1.1s cubic-bezier(.16,1,.3,1) both;}
+        .w1 span{animation-delay:.1s}.w2 span{animation-delay:.22s}.w3 span{animation-delay:.34s}.w4 span{animation-delay:.46s}
+        .p-card .c-img{transition:transform .9s cubic-bezier(.25,.46,.45,.94);}
+        .p-card:hover .c-img{transform:scale(1.07);}
+        .p-card .c-ov{opacity:0;transition:opacity .4s ease;}
+        .p-card:hover .c-ov{opacity:1;}
+        .feature-item{border-left:1px solid var(--border);padding-left:24px;}
+        .feature-item:first-child{border-left:none;padding-left:0;}
+        .g-line{display:inline-block;width:36px;height:1px;background:var(--gold);vertical-align:middle;margin-right:10px;}
+        .material-symbols-outlined{font-size:18px;line-height:1;display:inline-block;vertical-align:middle;}
+        ::-webkit-scrollbar{width:3px;} ::-webkit-scrollbar-thumb{background:var(--ink);}
+    </style>
+</head>
+<%
+  const heroImg1 = (settings && settings.heroImage1) || 'https://images.unsplash.com/photo-1548169874-53e85f753f1e?q=80&w=2400&auto=format&fit=crop';
+  const heroImg2 = (settings && settings.heroImage2) || 'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?q=80&w=2400&auto=format&fit=crop';
+  const heroImg3 = (settings && settings.heroImage3) || 'https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?q=80&w=2400&auto=format&fit=crop';
+  const headline    = (settings && settings.heroHeadline)    || 'Time Is The\nUltimate Luxury.';
+  const subheadline = (settings && settings.heroSubheadline) || 'The Autumn Curation — 2025';
+  const tagline     = (settings && settings.heroTagline)     || 'Precision. Craftsmanship. Legacy.';
+  const waNumber    = (settings && settings.whatsappNumber)  || '';
+  const marqueeRaw  = (settings && settings.marqueeText)     || 'Swiss Movement,Pakistan Crafted,Limited Edition,Precision Engineered,Luxury Timepieces,Handcrafted Dials';
+  const marqueeItems= marqueeRaw.split(',').map(s=>s.trim()).filter(Boolean);
+  const marqueeFull = [...marqueeItems, ...marqueeItems];
+%>
+<body data-whatsapp="<%= waNumber %>">
+<%- include('partials/header') %>
+
+<section class="relative w-full h-screen overflow-hidden bg-[var(--ink)]" id="hero-section">
+    <div class="hero-slide active" id="slide-0">
+        <img src="<%= heroImg1 %>" alt="Hero 1" class="hero-img-inner" onerror="this.src='https://images.unsplash.com/photo-1548169874-53e85f753f1e?q=80&w=2400&auto=format&fit=crop'"/>
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.15) 50%,transparent 100%)"></div>
+        <div class="absolute inset-0" style="background:linear-gradient(to right,rgba(0,0,0,.4) 0%,transparent 60%)"></div>
+    </div>
+    <div class="hero-slide inactive" id="slide-1">
+        <img src="<%= heroImg2 %>" alt="Hero 2" class="hero-img-inner" onerror="this.src='https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?q=80&w=2400&auto=format&fit=crop'"/>
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.15) 50%,transparent 100%)"></div>
+        <div class="absolute inset-0" style="background:linear-gradient(to right,rgba(0,0,0,.4) 0%,transparent 60%)"></div>
+    </div>
+    <div class="hero-slide inactive" id="slide-2">
+        <img src="<%= heroImg3 %>" alt="Hero 3" class="hero-img-inner" onerror="this.src='https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?q=80&w=2400&auto=format&fit=crop'"/>
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.15) 50%,transparent 100%)"></div>
+        <div class="absolute inset-0" style="background:linear-gradient(to right,rgba(0,0,0,.4) 0%,transparent 60%)"></div>
+    </div>
+    <div class="absolute inset-0 z-10 flex flex-col justify-end">
+        <div class="max-w-[1440px] mx-auto w-full px-6 sm:px-12 lg:px-20 pb-20 sm:pb-28">
+            <div class="flex items-center gap-3 mb-5" style="animation:wordUp .8s ease .05s both;">
+                <span class="g-line"></span>
+                <p class="font-label text-[9px] uppercase tracking-[0.5em] text-[var(--gold-light)]"><%= subheadline %></p>
+            </div>
+            <h1 class="font-display font-light text-white leading-none mb-10" style="font-size:clamp(3rem,9vw,9.5rem);">
+                <% headline.split('\n').forEach((line, li) => { %>
+                    <div>
+                        <% line.split(' ').forEach((word, wi) => { const cls = (li===headline.split('\n').length-1 && wi===line.split(' ').length-1) ? 'italic text-[var(--gold-light)]' : ''; %>
+                            <div class="word-wrap w<%= Math.min(li*4+wi+1,8) %>"><span class="<%= cls %>"><%= word %>&nbsp;</span></div>
+                        <% }); %>
+                    </div>
+                <% }); %>
+            </h1>
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5" style="animation:wordUp 1s ease .8s both;opacity:0;">
+                <a href="/collection" class="group inline-flex items-center gap-3 bg-[var(--gold)] text-[var(--ink)] px-8 py-4 font-label text-[10px] uppercase tracking-[0.3em] hover:bg-[var(--gold-light)] transition-all duration-500">
+                    <span>Explore Collection</span>
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
+                <a href="/collection" class="font-label text-[10px] uppercase tracking-[0.3em] text-white/50 hover:text-white transition-colors border-b border-transparent hover:border-white">View All Pieces</a>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+        <button class="slide-dot" data-i="0" onclick="goToSlide(0)" style="width:24px;height:1px;background:#b8975a;border:none;transition:all .5s;"></button>
+        <button class="slide-dot" data-i="1" onclick="goToSlide(1)" style="width:12px;height:1px;background:rgba(255,255,255,.3);border:none;transition:all .5s;"></button>
+        <button class="slide-dot" data-i="2" onclick="goToSlide(2)" style="width:12px;height:1px;background:rgba(255,255,255,.3);border:none;transition:all .5s;"></button>
+    </div>
+</section>
+
+<div class="overflow-hidden border-y border-[var(--border)] bg-[var(--ink)] py-4">
+    <div class="marquee-track">
+        <% marqueeFull.forEach(t => { %><span class="font-display italic text-[var(--gold)] text-lg px-8 shrink-0"><%= t %><span class="text-[var(--gold)]/25 mx-4">◆</span></span><% }); %>
+    </div>
+</div>
+
+<section class="py-12 sm:py-16 border-b border-[var(--border)]">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <% [['watch','Swiss Movement','Precision engineering'],['diamond','Sapphire Crystal','Scratch resistant glass'],['water_drop','100M Water Resistant','Built for life'],['verified','2 Year Warranty','Certified authentic']].forEach(([icon,title,sub],i) => { %>
+                <div class="feature-item reveal d<%= i+1 %>">
+                    <span class="material-symbols-outlined text-[var(--gold)] mb-3 block"><%= icon %></span>
+                    <p class="font-label text-[10px] uppercase tracking-[0.25em] mb-1"><%= title %></p>
+                    <p class="font-label text-[8px] uppercase tracking-[0.2em] text-[var(--mid)]"><%= sub %></p>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 sm:py-32 max-w-[1440px] mx-auto px-4 sm:px-12 lg:px-20">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-16 reveal">
+        <div>
+            <div class="flex items-center gap-3 mb-4"><span class="g-line"></span><p class="font-label text-[9px] uppercase tracking-[0.4em] text-[var(--mid)]">Curated Selection</p></div>
+            <h2 class="font-display font-light leading-none" style="font-size:clamp(2.5rem,5vw,5rem);">
+                <% if(featuredProducts && featuredProducts.length > 0 && featuredProducts[0].category) { %>
+                    Featured <span class="italic text-[var(--gold)]"><%= featuredProducts[0].category.name %></span>
+                <% } else { %>Featured <span class="italic text-[var(--gold)]">Timepieces</span><% } %>
+            </h2>
+        </div>
+        <a href="/collection" class="mt-6 sm:mt-0 group inline-flex items-center gap-2 font-label text-[9px] uppercase tracking-[0.3em] text-[var(--mid)] hover:text-[var(--ink)] transition-colors">
+            <span>View All</span><span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-12 sm:gap-y-16">
+        <% if(featuredProducts && featuredProducts.length > 0) { %>
+            <% featuredProducts.forEach((product, idx) => { %>
+                <div class="p-card group reveal d<%= (idx%8)+1 %> flex flex-col">
+                    <a href="/product/<%= product._id %>" class="block relative w-full aspect-[3/4] bg-[var(--bone)] overflow-hidden mb-4">
+                        <% if(product.isOnSale && product.salePrice) { %><span class="absolute top-3 left-3 z-20 font-label text-[8px] uppercase tracking-[0.2em] bg-[var(--ink)] text-white px-3 py-1.5">Sale</span><% } %>
+                        <img src="<%= product.cardImageUrl %>" alt="<%= product.title %>" class="c-img w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600'"/>
+                        <div class="c-ov absolute inset-0 bg-[var(--ink)]/40 flex items-end justify-center pb-6"><span class="font-label text-[9px] text-white uppercase tracking-[0.3em] border-b border-white/60 pb-1">View Watch</span></div>
+                    </a>
+                    <div class="flex flex-col gap-1 px-1">
+                        <span class="font-label text-[8px] uppercase tracking-[0.25em] text-[var(--gold)]"><%= product.category ? product.category.name : '4H' %></span>
+                        <a href="/product/<%= product._id %>"><h3 class="font-display font-light text-base sm:text-lg leading-snug hover:text-[var(--mid)] transition-colors line-clamp-2"><%= product.title %></h3></a>
+                        <div class="font-label text-[11px] tracking-wider mt-1">
+                            <% if(product.isOnSale && product.salePrice) { %><span>PKR <%= product.salePrice.toLocaleString() %></span><del class="text-[var(--mid)] ml-2 text-[9px]">PKR <%= product.basePrice.toLocaleString() %></del>
+                            <% } else { %><span>PKR <%= product.basePrice.toLocaleString() %></span><% } %>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %><div class="col-span-full py-20 text-center"><p class="font-label text-[9px] uppercase tracking-[0.4em] text-[var(--mid)]">No products yet — add from admin</p></div><% } %>
+    </div>
+</section>
+
+<section class="py-24 sm:py-36 bg-[var(--ink)] relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.03]" style="background:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(255,255,255,.5) 60px,rgba(255,255,255,.5) 61px)"></div>
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 text-center reveal">
+        <div class="flex items-center justify-center gap-6 mb-10">
+            <div style="height:1px;flex:1;max-width:80px;background:rgba(184,151,90,.3)"></div>
+            <span class="font-label text-[9px] uppercase tracking-[0.5em] text-[var(--gold)]">Our Philosophy</span>
+            <div style="height:1px;flex:1;max-width:80px;background:rgba(184,151,90,.3)"></div>
+        </div>
+        <blockquote class="font-display font-light text-white leading-tight" style="font-size:clamp(2rem,5vw,5.5rem);">
+            "Time is not just measured,<br><span class="italic text-[var(--gold-light)]">it is crafted."</span>
+        </blockquote>
+        <p class="mt-8 font-label text-[9px] uppercase tracking-[0.4em] text-white/25">— 4H Timepieces, Est. 2024</p>
+    </div>
+</section>
+
+<% if(categoriesWithProducts && categoriesWithProducts.length > 0) { %>
+    <% categoriesWithProducts.forEach((section) => { %>
+        <% if(section.products && section.products.length > 0) { %>
+            <section class="py-20 sm:py-28 max-w-[1440px] mx-auto px-4 sm:px-12 lg:px-20">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 reveal">
+                    <div><div class="flex items-center gap-3 mb-3"><span class="g-line"></span><p class="font-label text-[9px] uppercase tracking-[0.4em] text-[var(--mid)]">Collection</p></div>
+                        <h2 class="font-display font-light" style="font-size:clamp(2rem,4vw,4rem);"><%= section.category.name %></h2></div>
+                    <a href="/collection?cat=<%= section.category.slug %>" class="mt-4 sm:mt-0 group inline-flex items-center gap-2 font-label text-[9px] uppercase tracking-[0.3em] text-[var(--mid)] hover:text-[var(--ink)] transition-colors">
+                        <span>Shop All</span><span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span></a>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-10">
+                    <% section.products.forEach((product, pidx) => { %>
+                        <div class="p-card group reveal d<%= (pidx%4)+1 %> flex flex-col">
+                            <a href="/product/<%= product._id %>" class="block relative w-full aspect-[3/4] bg-[var(--bone)] overflow-hidden mb-4">
+                                <% if(product.isOnSale && product.salePrice) { %><span class="absolute top-3 left-3 z-20 font-label text-[8px] uppercase tracking-[0.2em] bg-[var(--ink)] text-white px-3 py-1.5">Sale</span><% } %>
+                                <img src="<%= product.cardImageUrl %>" alt="<%= product.title %>" class="c-img w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600'"/>
+                                <div class="c-ov absolute inset-0 bg-[var(--ink)]/40 flex items-end justify-center pb-6"><span class="font-label text-[9px] text-white uppercase tracking-[0.3em] border-b border-white/60 pb-1">View Watch</span></div>
+                            </a>
+                            <div class="flex flex-col gap-1 px-1">
+                                <a href="/product/<%= product._id %>"><h3 class="font-display font-light text-base sm:text-lg leading-snug hover:text-[var(--mid)] transition-colors line-clamp-2"><%= product.title %></h3></a>
+                                <div class="font-label text-[11px] tracking-wider mt-1">
+                                    <% if(product.isOnSale && product.salePrice) { %><span>PKR <%= product.salePrice.toLocaleString() %></span><del class="text-[var(--mid)] ml-2">PKR <%= product.basePrice.toLocaleString() %></del>
+                                    <% } else { %><span>PKR <%= product.basePrice.toLocaleString() %></span><% } %>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </section>
+            <div style="width:1px;height:60px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:0 auto;"></div>
+        <% } %>
+    <% }); %>
+<% } %>
+
+<section class="py-24 sm:py-32 text-center reveal">
+    <p class="font-label text-[9px] uppercase tracking-[0.5em] text-[var(--gold)] mb-6">Free Nationwide Delivery</p>
+    <h2 class="font-display font-light mb-10" style="font-size:clamp(2.5rem,6vw,6rem);">Find Your <span class="italic">Timepiece</span></h2>
+    <a href="/collection" class="group inline-flex items-center gap-3 border border-[var(--ink)] px-10 py-4 font-label text-[10px] uppercase tracking-[0.3em] hover:bg-[var(--ink)] hover:text-white transition-all duration-500">
+        <span>Shop Collection</span><span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+    </a>
+</section>
+
+<%- include('partials/footer') %>
+
+<script>
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);} });
+    },{threshold:.08,rootMargin:'0px 0px -50px 0px'});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots   = document.querySelectorAll('.slide-dot');
+    let current  = 0, autoTimer;
+    function goToSlide(n){
+        slides[current].className='hero-slide inactive';
+        dots[current].style.width='12px'; dots[current].style.background='rgba(255,255,255,.3)';
+        current=n;
+        slides[current].className='hero-slide active';
+        dots[current].style.width='24px'; dots[current].style.background='#b8975a';
+        clearInterval(autoTimer); autoTimer=setInterval(()=>goToSlide((current+1)%slides.length),6000);
+    }
+    autoTimer=setInterval(()=>goToSlide((current+1)%slides.length),6000);
+</script>
+</body>
+</html>

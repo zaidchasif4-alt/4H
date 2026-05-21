@@ -1,0 +1,145 @@
+<div class="space-y-6 sm:space-y-8">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h1 class="text-xl sm:text-2xl font-serif-luxury font-medium text-gray-900">Products Catalog</h1>
+            <p class="text-xs sm:text-sm text-gray-500 mt-1">Manage your watch products, pricing, and sale status.</p>
+        </div>
+        <a href="/admin/add-product"
+            class="flex items-center justify-center gap-2 bg-black text-white hover:bg-zinc-800 text-xs font-semibold uppercase tracking-widest py-3 px-5 rounded transition-colors w-full sm:w-auto shadow-sm">
+            <span class="material-symbols-outlined" style="font-size:16px;">add</span>
+            <span>Add Product</span>
+        </a>
+    </div>
+
+    <div class="bg-white border border-gray-100 rounded-lg shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse" style="min-width:800px;">
+                <thead>
+                    <tr class="bg-gray-50 text-gray-400 text-[10px] font-semibold uppercase tracking-wider border-b border-gray-100">
+                        <th class="px-4 sm:px-6 py-4 w-20">Image</th>
+                        <th class="px-4 sm:px-6 py-4">Product</th>
+                        <th class="px-4 sm:px-6 py-4">Category</th>
+                        <th class="px-4 sm:px-6 py-4">Price</th>
+                        <th class="px-4 sm:px-6 py-4 w-72">Sale Control</th>
+                        <th class="px-4 sm:px-6 py-4 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-50 text-sm">
+                    <% if(products && products.length > 0) { %>
+                        <% products.forEach(product => { %>
+                            <tr class="hover:bg-gray-50/50 transition-colors">
+
+                                <!-- Image -->
+                                <td class="px-4 sm:px-6 py-4">
+                                    <div class="w-12 h-14 bg-gray-100 rounded overflow-hidden shadow-sm">
+                                        <img src="<%= product.cardImageUrl %>" alt="<%= product.title %>"
+                                             class="w-full h-full object-cover"
+                                             onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=200';"/>
+                                    </div>
+                                </td>
+
+                                <!-- Product info -->
+                                <td class="px-4 sm:px-6 py-4">
+                                    <p class="font-medium text-gray-900"><%= product.title %></p>
+                                    <div class="mt-1">
+                                        <% if(product.showOnHomeScreen) { %>
+                                            <span class="inline-block text-[9px] bg-zinc-100 text-zinc-700 px-2 py-0.5 rounded font-semibold uppercase tracking-wider">Featured</span>
+                                        <% } else { %>
+                                            <span class="inline-block text-[9px] bg-gray-50 text-gray-400 px-2 py-0.5 rounded font-semibold uppercase tracking-wider">Catalog</span>
+                                        <% } %>
+                                    </div>
+                                </td>
+
+                                <!-- Category -->
+                                <td class="px-4 sm:px-6 py-4 text-gray-500 text-sm">
+                                    <%= product.category ? product.category.name : '—' %>
+                                </td>
+
+                                <!-- Price -->
+                                <td class="px-4 sm:px-6 py-4 font-mono text-xs font-medium text-gray-900">
+                                    <% if(product.isOnSale && product.salePrice) { %>
+                                        <del class="text-gray-400 block font-normal mb-0.5">PKR <%= product.basePrice.toLocaleString() %></del>
+                                        <span class="text-red-600 font-bold">PKR <%= product.salePrice.toLocaleString() %></span>
+                                    <% } else { %>
+                                        PKR <%= product.basePrice.toLocaleString() %>
+                                    <% } %>
+                                </td>
+
+                                <!-- Sale toggle -->
+                                <td class="px-4 sm:px-6 py-4">
+                                    <form action="/admin/products/update-sale/<%= product._id %>" method="POST" class="flex items-center gap-3">
+                                        <label class="relative inline-flex items-center cursor-pointer select-none">
+                                            <input type="checkbox" name="isOnSale" value="true" class="sr-only peer"
+                                                <%= product.isOnSale ? 'checked' : '' %>
+                                                onclick="
+                                                    var wrap = document.getElementById('sw-<%= product._id %>');
+                                                    var inp  = document.getElementById('si-<%= product._id %>');
+                                                    if(this.checked){
+                                                        wrap.style.display='flex'; inp.required=true; inp.focus();
+                                                    } else {
+                                                        wrap.style.display='none'; inp.required=false;
+                                                        var f=document.createElement('form'); f.method='POST';
+                                                        f.action='/admin/products/update-sale/<%= product._id %>';
+                                                        var h=document.createElement('input'); h.type='hidden'; h.name='isOnSale'; h.value='false';
+                                                        f.appendChild(h); document.body.appendChild(f); f.submit();
+                                                    }
+                                                "/>
+                                            <div class="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-black"></div>
+                                            <span class="ml-2 text-xs uppercase font-semibold tracking-wider text-gray-400 peer-checked:text-black">Sale</span>
+                                        </label>
+
+                                        <div id="sw-<%= product._id %>" style="display:<%= product.isOnSale ? 'flex' : 'none' %>; align-items:center; gap:6px;">
+                                            <div style="position:relative; display:flex; align-items:center;">
+                                                <span style="position:absolute;left:8px;color:#9ca3af;font-size:10px;font-family:monospace;">Rs</span>
+                                                <input type="number" id="si-<%= product._id %>" name="salePrice"
+                                                    placeholder="Sale Price" min="0" max="<%= product.basePrice %>"
+                                                    value="<%= product.salePrice || '' %>"
+                                                    <%= product.isOnSale ? 'required' : '' %>
+                                                    style="width:110px;padding:6px 8px 6px 28px;font-size:12px;font-family:monospace;border:1px solid #e5e7eb;border-radius:4px;outline:none;"/>
+                                            </div>
+                                            <button type="submit"
+                                                class="bg-black hover:bg-zinc-800 text-white text-[10px] font-bold uppercase tracking-widest py-2 px-3 rounded transition-colors">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </form>
+                                </td>
+
+                                <!-- Actions: Edit + Delete -->
+                                <td class="px-4 sm:px-6 py-4">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <!-- Edit -->
+                                        <a href="/admin/edit-product/<%= product._id %>"
+                                            class="flex items-center justify-center w-8 h-8 rounded text-gray-400 hover:text-black hover:bg-gray-100 transition-all"
+                                            title="Edit Product">
+                                            <span class="material-symbols-outlined" style="font-size:18px;">edit</span>
+                                        </a>
+
+                                        <!-- Delete — FIXED ROUTE -->
+                                        <form action="/admin/delete-product/<%= product._id %>" method="POST"
+                                              onsubmit="return confirm('Delete product: <%= product.title %>? This cannot be undone.')">
+                                            <button type="submit"
+                                                class="flex items-center justify-center w-8 h-8 rounded text-gray-300 hover:text-red-600 hover:bg-red-50 transition-all"
+                                                title="Delete Product">
+                                                <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="6" class="px-6 py-16 text-center">
+                                <span class="material-symbols-outlined text-gray-200 block mb-3" style="font-size:40px;">inventory_2</span>
+                                <p class="text-sm text-gray-400">No products yet.</p>
+                                <a href="/admin/add-product" class="inline-block mt-4 text-xs font-semibold uppercase tracking-widest text-black underline underline-offset-4">Add First Product</a>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

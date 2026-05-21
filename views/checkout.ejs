@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Checkout - 4H Premium Store</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed-variant": "#464747",
+                        "surface-container": "#eeeeee",
+                        "inverse-surface": "#2f3131",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-secondary-container": "#5f6161",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#444748",
+                        "surface-container-high": "#e8e8e8",
+                        "on-background": "#1a1c1c",
+                        "inverse-on-surface": "#f0f1f1",
+                        "tertiary-fixed-dim": "#c7c6c6",
+                        "primary": "#000000",
+                        "primary-fixed": "#e5e2e1",
+                        "surface-dim": "#dadada",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#5f5e5e",
+                        "on-secondary-fixed-variant": "#454747",
+                        "primary-fixed-dim": "#c9c6c5",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#1a1c1c",
+                        "tertiary-fixed": "#e3e2e2",
+                        "on-primary-fixed": "#1c1b1b",
+                        "background": "#f9f9f9",
+                        "tertiary": "#000000",
+                        "surface": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "secondary": "#5d5f5f",
+                        "on-surface": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "primary-container": "#1c1b1b",
+                        "surface-bright": "#f9f9f9",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "outline-variant": "#c4c7c7",
+                        "surface-container-highest": "#e2e2e2",
+                        "outline": "#747878",
+                        "on-tertiary-container": "#838484",
+                        "inverse-primary": "#c9c6c5",
+                        "secondary-container": "#dcdddd",
+                        "surface-container-low": "#f3f3f4",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-primary-container": "#858383"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "8px",
+                        "margin-tablet": "40px",
+                        "gutter": "32px",
+                        "section-gap": "160px",
+                        "margin-mobile": "20px",
+                        "container-max-width": "1440px",
+                        "margin-desktop": "80px"
+                    },
+                    fontFamily: {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Playfair Display"],
+                        "headline-display": ["Playfair Display"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    fontSize: {
+                        "body-lg": ["18px", { "lineHeight": "32px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "headline-display": ["80px", { "lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-primary selection:text-on-primary">
+
+<%- include('partials/header') %>
+
+<main class="flex-1 w-full max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop pt-24 md:pt-16 pb-48 md:pb-16">
+
+    <% 
+       let totalItems = 0; 
+       let subtotal = 0;
+       if (typeof checkoutItems !== 'undefined' && checkoutItems.length > 0) { 
+           checkoutItems.forEach(item => {
+               totalItems += (item.quantity || 1);
+               subtotal += (item.price * (item.quantity || 1));
+           });
+       } 
+    %>
+
+    <div class="mb-12 border-b border-outline-variant pb-6">
+        <h1 class="font-headline-display text-headline-lg-mobile md:text-headline-display tracking-tight">Checkout</h1>
+        <p class="font-body-md text-body-md text-secondary mt-2"><%= totalItems %> Items</p>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-gutter lg:gap-16">
+
+        <!-- LEFT: Shipping Form -->
+        <section class="lg:w-[60%]">
+            <h2 class="font-label-caps text-label-caps text-secondary mb-6 tracking-[0.2em]">SHIPPING INFORMATION</h2>
+            <form action="/place-order" method="POST" class="flex flex-col gap-5">
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex-1 flex flex-col gap-1">
+                        <label class="font-label-caps text-[11px] tracking-widest text-secondary">FIRST NAME</label>
+                        <input type="text" name="firstName" required placeholder="Ahmed" class="border border-outline-variant bg-white px-4 py-3 text-sm font-body-md focus:outline-none focus:border-primary transition-colors"/>
+                    </div>
+                    <div class="flex-1 flex flex-col gap-1">
+                        <label class="font-label-caps text-[11px] tracking-widest text-secondary">LAST NAME</label>
+                        <input type="text" name="lastName" required placeholder="Khan" class="border border-outline-variant bg-white px-4 py-3 text-sm font-body-md focus:outline-none focus:border-primary transition-colors"/>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="font-label-caps text-[11px] tracking-widest text-secondary">EMAIL ADDRESS</label>
+                    <input type="email" name="email" required placeholder="ahmed@example.com" class="border border-outline-variant bg-white px-4 py-3 text-sm font-body-md focus:outline-none focus:border-primary transition-colors"/>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="font-label-caps text-[11px] tracking-widest text-secondary">PHONE NUMBER</label>
+                    <input type="tel" name="phone" required placeholder="+92 300 0000000" class="border border-outline-variant bg-white px-4 py-3 text-sm font-body-md focus:outline-none focus:border-primary transition-colors"/>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="font-label-caps text-[11px] tracking-widest text-secondary">STREET ADDRESS</label>
+                    <input type="text" name="address" required placeholder="House #, Street, Area" class="border border-outline-variant bg-white px-4 py-3 text-sm font-body-md focus:outline-none focus:border-primary transition-colors"/>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex-1 flex flex-col gap-1">
+                        <label class="font-label-caps text-[11px] tracking-widest text-secondary">CITY</label>
+                        <input type="text" name="city" required placeholder="Lahore" class="border border-outline-variant bg-white px-4 py-3 text-sm font-body-md focus:outline-none focus:border-primary transition-colors"/>
+                    </div>
+                    <div class="flex-1 flex flex-col gap-1">
+                        <label class="font-label-caps text-[11px] tracking-widest text-secondary">POSTAL CODE</label>
+                        <input type="text" name="postalCode" placeholder="54000" class="border border-outline-variant bg-white px-4 py-3 text-sm font-body-md focus:outline-none focus:border-primary transition-colors"/>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="font-label-caps text-[11px] tracking-widest text-secondary">ORDER NOTES (OPTIONAL)</label>
+                    <textarea name="notes" rows="3" placeholder="Any special instructions..." class="border border-outline-variant bg-white px-4 py-3 text-sm font-body-md focus:outline-none focus:border-primary transition-colors resize-none"></textarea>
+                </div>
+
+                <div class="mt-4 hidden lg:block">
+                    <button type="submit" class="w-full bg-primary text-on-primary py-4 font-label-caps text-label-caps font-semibold tracking-[0.2em] hover:bg-neutral-800 transition-all duration-300 active:scale-[0.99] shadow-sm">
+                        PLACE ORDER — Rs <%= subtotal.toLocaleString() %>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- RIGHT: Order Summary -->
+        <aside class="lg:w-[40%]">
+            <div class="sticky top-32 bg-neutral-50/60 border border-neutral-100 p-8 rounded-sm shadow-xs">
+                <h3 class="font-label-caps text-label-caps font-semibold text-neutral-900 mb-6 pb-3 border-b border-neutral-200/60 tracking-[0.2em]">YOUR ORDER</h3>
+                
+                <div class="flex flex-col gap-5 mb-6">
+                    <% if (typeof checkoutItems !== 'undefined' && checkoutItems.length > 0) { %>
+                        <% checkoutItems.forEach(item => { %>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-16 bg-surface border border-outline-variant/30 shrink-0 overflow-hidden rounded-sm">
+                                    <img src="<%= item.image %>" alt="<%= item.name %>" class="w-full h-full object-cover"/>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-body-md text-sm font-medium text-neutral-900 truncate"><%= item.name %></p>
+                                    <p class="font-mono text-xs text-secondary mt-0.5">Qty: <%= item.quantity || 1 %></p>
+                                </div>
+                                <span class="font-mono text-sm font-semibold text-neutral-900 whitespace-nowrap">Rs <%= (item.price * (item.quantity || 1)).toLocaleString() %></span>
+                            </div>
+                        <% }); %>
+                    <% } %>
+                </div>
+
+                <hr class="border-t border-outline-variant/40 mb-4"/>
+
+                <div class="flex flex-col gap-3 font-body-md text-sm text-neutral-600 mb-4">
+                    <div class="flex justify-between">
+                        <span class="tracking-wide">Subtotal</span>
+                        <span class="font-mono font-medium text-neutral-900">Rs <%= subtotal.toLocaleString() %></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="tracking-wide">Shipping</span>
+                        <span class="text-emerald-700 text-xs font-semibold uppercase tracking-wider">Complimentary</span>
+                    </div>
+                </div>
+
+                <hr class="border-t border-outline-variant/40 mb-4"/>
+
+                <div class="flex justify-between items-end">
+                    <span class="font-body-md text-base text-neutral-900 font-medium">Total</span>
+                    <span class="font-mono text-2xl font-bold text-neutral-900 leading-none">Rs <%= subtotal.toLocaleString() %></span>
+                </div>
+
+                <p class="text-xs text-secondary mt-4 leading-relaxed">
+                    <span class="material-symbols-outlined text-[14px] align-middle mr-1">lock</span>
+                    Cash on Delivery available. Your order details are secure.
+                </p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Mobile Submit Button -->
+    <div class="lg:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant/60 px-margin-mobile py-5 z-40 shadow-lg">
+        <button type="submit" form="checkout-form" onclick="document.querySelector('form').submit()" class="w-full bg-primary text-on-primary font-label-caps text-label-caps font-semibold tracking-widest py-4 flex justify-center items-center gap-2 active:scale-[0.98] transition-transform">
+            PLACE ORDER — Rs <%= subtotal.toLocaleString() %>
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+    </div>
+
+</main>
+
+<%- include('partials/footer') %>
+
+</body>
+</html>
