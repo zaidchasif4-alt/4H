@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/zaidchasif4-alt/4H/issues"
   },
-  "homepage": "https://github.com/zaidchasif4-alt/4H#readme"
+  "homepage": "https://github.com/zaidchasif4-alt/4H#readme",
+  "dependencies": {
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.2"
+  }
 }
