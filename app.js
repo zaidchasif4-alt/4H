@@ -11,7 +11,7 @@ const Settings = require('./models/Settings');
 const app = express();
 
 // ── Database ──────────────────────────────────────────────────────────────────
-mongoose.connect('mongodb://localhost:27017/4h_luxury_store')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/4h_luxury_store')
     .then(() => console.log('MongoDB connected.'))
     .catch(err => console.error('DB error:', err));
 
